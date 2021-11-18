@@ -1,1 +1,1 @@
-# project-2-bootcamp
+# Rocket Academy Coding Bootcamp: Base Node App
