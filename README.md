@@ -1,1 +1,1 @@
-# Rocket Academy Coding Bootcamp: Base Node App
+# SHANNON'S PROJECT 2 WOOOOO!
