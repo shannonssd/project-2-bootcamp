@@ -1,3 +1,4 @@
+/* eslint-disable new-cap */
 import jsSHA from 'jssha';
 
 // SALT
@@ -11,7 +12,7 @@ export const getHash = (input) => {
   return shaObj.getHash('HEX');
 };
 
-// User authentication
+// Session authentication
 export const userAuth = (req, res, next) => {
   req.isUserLoggedIn = false;
 
