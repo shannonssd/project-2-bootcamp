@@ -49,13 +49,7 @@ export const loginFormResults = (req, res) => {
   const enteredPassword = req.body.password;
 
   const sqlQuery = 'SELECT * FROM users WHERE email = $1';
-  pool.query(sqlQuery, enteredEmail, (error, result) => {
-    console.log(result.rows);
-    if (error) {
-      console.log('Error executing query', error.stack);
-      res.status(503).send(result.rows);
-      return;
-    }
+  pool.query(sqlQuery, enteredEmail).then((result) => {
     if (result.rows.length === 0) {
       res.status(403).send('Sorry! Please try again!');
       return;

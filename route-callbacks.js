@@ -34,11 +34,48 @@ export const newInfoForm = (req, res) => {
   res.render('add-info');
 };
 
+// eslint-disable-next-line prefer-const
+let newInfoArray = [];
 export const newInfo = (req, res) => {
+  newInfoArray = [];
+  const newPatient = req.body['new-patient'];
+  const { relationship } = req.body;
+  const newHospital = req.body['new-hospital'];
+  const newDepartment = req.body['new-department'];
+
+  if (newPatient !== '') {
+    const patientArray = [newPatient, relationship];
+    const patientQuery = 'INSERT INTO patients (name, relationship) VALUES ($1, $2) RETURNING *';
+    pool.query(patientQuery, patientArray).then((patientResult) => {
+      newInfoArray.push({ 'Patient Name': `${patientResult.rows[0].name}` });
+      newInfoArray.push({ 'Relationship to User': `${patientResult.rows[0].relationship}` });
+    });
+  }
+  if (newHospital !== '') {
+    const hospitalArray = [newHospital];
+    const hospitalQuery = 'INSERT INTO hospitals (name) VALUES ($1) RETURNING *';
+    pool.query(hospitalQuery, hospitalArray).then((hospitalResult) => {
+      newInfoArray.push({ 'New Hospital': `${hospitalResult.rows[0].name}` });
+    });
+  }
+  if (newDepartment !== '') {
+    const departmentArray = [newDepartment];
+    const departmentQuery = 'INSERT INTO departments (name) VALUES ($1) RETURNING *';
+    pool.query(departmentQuery, departmentArray).then((departmentResult) => {
+      newInfoArray.push({ 'New Department': `${departmentResult.rows[0].name}` });
+      // console.log(newInfoArray);
+      console.log('INSIDE LAWST QUERY');
+      res.redirect('/add-info-new');
+    });
+  } else {
+    console.log('AFTER LAWST QUERY');
+
+    res.redirect('/add-info-new');
+  }
 };
 
 export const newInfoDisplay = (req, res) => {
-  res.render('add-info-new');
+  res.render('add-info-new', { newInfoArray });
 };
 
 export const addApptForm = (req, res) => {

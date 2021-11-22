@@ -1,7 +1,7 @@
 import express from 'express';
 import methodOverride from 'method-override';
 import cookieParser from 'cookie-parser';
-import { userAuth } from './hashing.js';
+import { sessionAuth } from './hashing.js';
 import {
   signUpForm, signUpFormResults, loginForm, loginFormResults, logout,
 } from './account-route-callbacks.js';
@@ -18,8 +18,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
 app.use(express.static('public'));
 app.use(cookieParser());
-// User Authenticaiton
-app.use(userAuth);
+// Session Authenticaiton
+app.use(sessionAuth);
 
 // #################### Account Routes
 // Signup

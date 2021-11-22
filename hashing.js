@@ -13,7 +13,7 @@ export const getHash = (input) => {
 };
 
 // Session authentication
-export const userAuth = (req, res, next) => {
+export const sessionAuth = (req, res, next) => {
   req.isUserLoggedIn = false;
 
   if (req.cookies.loggedInHash && req.cookies.userId) {
@@ -22,6 +22,5 @@ export const userAuth = (req, res, next) => {
       req.isUserLoggedIn = true;
     }
   }
-  console.log(req.isUserLoggedIn);
   next();
 };
