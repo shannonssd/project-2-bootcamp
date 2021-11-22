@@ -129,6 +129,7 @@ export const addAppt = (req, res) => {
           const departmentID = departmentResults.rows[0].id;
           const appointmentData = [visitID, departmentID, req.body.time];
           return pool.query('INSERT INTO appointments (visit_id, department_id, time) VALUES ($1, $2, $3)', appointmentData).then((apptResults) => {
+            res.redirect('/');
           });
         });
       });
@@ -148,5 +149,4 @@ export const deleteAppt = (req, res) => {
   pool.query('DELETE FROM appointments WHERE id = $1', [appointmentID]).then((deleteResult) => {
     res.redirect('/');
   });
-  // res.redirect('/');
 };
