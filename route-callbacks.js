@@ -27,7 +27,16 @@ export const mainPage = (req, res) => {
 };
 
 export const homePage = (req, res) => {
-  res.render('home');
+  const getApptsQuery = 'SELECT  patients.name AS "Patient", patients.relationship AS "Relationship", hospital_visits.date AS "Date", hospitals.name AS "Hospital", departments.name as "Department", appointments.time AS "Time" FROM patients INNER JOIN hospital_visits ON patients.id = hospital_visits.patient_id INNER JOIN appointments ON hospital_visits.id = appointments.visit_id INNER JOIN departments ON appointments.department_id = departments.id INNER JOIN hospitals ON hospital_visits.hospital_id = hospitals.id;';
+  pool.query(getApptsQuery).then((apptsResult) => {
+    const apptData = [];
+    const apptArray = apptsResult.rows;
+    for (let i = 0; i < apptArray.length; i += 1) {
+      apptData.push(Object.values(apptArray[i]));
+    }
+    console.log(apptData);
+    res.render('home', { apptData });
+  });
 };
 
 export const newInfoForm = (req, res) => {
@@ -119,13 +128,6 @@ export const addAppt = (req, res) => {
       });
     });
   });
-  // // const hospitalVisitQuery = 'INSERT INTO ';
-  // console.log(req.body['patient-name']);
-  // // console.log(req.body['patient-name']);
-  // console.log(req.body.hospital);
-  // console.log(req.body.department);
-  // console.log(req.body.time);
-  // console.log(req.body.date);
 };
 
 export const editApptForm = (req, res) => {

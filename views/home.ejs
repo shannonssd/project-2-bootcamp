@@ -7,6 +7,23 @@
     <title>Document</title>
   </head>
   <body>
+    <table>
+      <tr>
+        <th>Patient</th>
+        <th>Relationship</th>
+        <th>Date</th>
+        <th>Hospital</th>
+        <th>Department</th>
+        <th>Time</th>
+      </tr>
+      <% for(let i = 0; i< apptData.length; i +=1){ %>
+      <tr>
+        <% for(let j = 0; j< 6; j +=1){ %>
+        <th><%= apptData[i][j] %></th>
+        <% } %>
+      </tr>
+      <% } %>
+    </table>
     <form action="/logout?_method=DELETE" method="POST">
       <input type="submit" value="Logout" />
     </form>

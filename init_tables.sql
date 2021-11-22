@@ -34,7 +34,7 @@ id SERIAL PRIMARY KEY,
 name TEXT
 );
 
-SELECT patients.id, patients.name AS patient_name, patients.relationship, hospital_visits.date, hospitals.name AS hospital, departments.name as department, appointments.time FROM patients INNER JOIN hospital_visits ON patients.id = hospital_visits.patient_id INNER JOIN appointments ON hospital_visits.id = appointments.visit_id INNER JOIN departments ON appointments.department_id = departments.id INNER JOIN hospitals ON hospital_visits.hospital_id = hospitals.id;
+SELECT  patients.name AS "Patient", patients.relationship AS "Relationship", hospital_visits.date AS "Date", hospitals.name AS "Hospital", departments.name as "Department", appointments.time AS "Time" FROM patients INNER JOIN hospital_visits ON patients.id = hospital_visits.patient_id INNER JOIN appointments ON hospital_visits.id = appointments.visit_id INNER JOIN departments ON appointments.department_id = departments.id INNER JOIN hospitals ON hospital_visits.hospital_id = hospitals.id;
 
 CREATE TABLE IF NOT EXISTS medications (
   id SERIAL PRIMARY KEY,
