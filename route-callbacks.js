@@ -78,11 +78,54 @@ export const newInfoDisplay = (req, res) => {
   res.render('add-info-new', { newInfoArray });
 };
 
+// eslint-disable-next-line prefer-const
 export const addApptForm = (req, res) => {
-  res.render('add-appt');
+  // eslint-disable-next-line prefer-const
+  let formData = [];
+  const patientQuery = 'SELECT name FROM patients';
+  const hospitalQuery = 'SELECT name FROM hospitals';
+  const departmentQuery = 'SELECT name FROM departments';
+  pool.query(patientQuery).then((patientResults) => {
+    const patientDetails = patientResults.rows;
+    formData.push(patientDetails);
+    return pool.query(hospitalQuery).then((hospitalResults) => {
+      const hospitalDetails = hospitalResults.rows;
+      formData.push(hospitalDetails);
+      return pool.query(departmentQuery).then((departmentResults) => {
+        const departmentDetails = departmentResults.rows;
+        formData.push(departmentDetails);
+        res.render('add-appt', { formData });
+      });
+    });
+  });
 };
 
 export const addAppt = (req, res) => {
+  pool.query('SELECT id FROM patients WHERE name = $1', [req.body['patient-name']]).then((patientResults) => {
+    const patientID = patientResults.rows[0].id;
+    return pool.query('SELECT id FROM hospitals WHERE name = $1', [req.body.hospital]).then((hospResults) => {
+      const hospitalID = hospResults.rows[0].id;
+      console.log(patientID, hospitalID);
+      const visitData = [req.body.date, hospitalID, patientID];
+      return pool.query('INSERT INTO hospital_visits (date, hospital_id, patient_id) VALUES ($1, $2, $3) RETURNING *', visitData).then((insertResults) => {
+        const visitID = insertResults.rows[0].id;
+        return pool.query('SELECT id FROM departments WHERE name = $1', [req.body.department]).then((departmentResults) => {
+          const departmentID = departmentResults.rows[0].id;
+          const appointmentData = [visitID, departmentID, req.body.time];
+          return pool.query('INSERT INTO appointments (visit_id, department_id, time) VALUES ($1, $2, $3)', appointmentData).then((apptResults) => {
+            console.log('done!');
+          });
+        });
+      });
+    });
+  });
+  // // const hospitalVisitQuery = 'INSERT INTO ';
+  // console.log(req.body['patient-name']);
+  // // console.log(req.body['patient-name']);
+  // console.log(req.body.hospital);
+  // console.log(req.body.department);
+  // console.log(req.body.time);
+  // console.log(req.body.date);
 };
 
 export const editApptForm = (req, res) => {

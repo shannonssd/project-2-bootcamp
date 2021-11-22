@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="/add-appt" method="POST">
+      Patient Name:
+      <select name="patient-name" id="patient-name">
+        <% formData[0].forEach((element) => { %>
+        <option value="<%= element.name %>"><%= element.name %></option>
+        <%})%>
+      </select>
+      <br /><br />
+      Hospital:
+      <select name="hospital" id="hospital">
+        <% formData[1].forEach((element) => { %>
+        <option value="<%= element.name %>"><%= element.name %></option>
+        <%})%>
+      </select>
+      <br /><br />
+      Department:
+      <select name="department" id="department">
+        <% formData[2].forEach((element) => { %>
+        <option value="<%= element.name %>"><%= element.name %></option>
+        <%})%>
+      </select>
+      <br /><br />
+      Date:
+      <label for="date"></label>
+      <input type="date" id="date" name="date" />
+      <br /><br />
+      Time:
+      <label for="time"></label>
+      <input type="time" id="time" name="time" /><br /><br />
+      <input type="submit" value="Submit" />
+    </form>
+  </body>
+</html>
