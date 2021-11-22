@@ -36,7 +36,6 @@ export const homePage = (req, res) => {
       apptData.push(Object.values(apptArray[i]));
     }
     for (let k = 0; k < apptData.length; k += 1) {
-      console.log(apptData[k][2]);
       apptData[k][2] = DateTime.fromISO(apptData[k][2]).toFormat('dd-MMM-yyyy');
     }
     return pool.query('SELECT id FROM appointments').then((apptIdResults) => {
@@ -119,9 +118,6 @@ export const addApptForm = (req, res) => {
 };
 
 export const addAppt = (req, res) => {
-  console.log(req.body.date);
-  console.log(typeof req.body.date);
-
   pool.query('SELECT id FROM patients WHERE name = $1', [req.body['patient-name']]).then((patientResults) => {
     const patientID = patientResults.rows[0].id;
     return pool.query('SELECT id FROM hospitals WHERE name = $1', [req.body.hospital]).then((hospResults) => {
@@ -148,7 +144,9 @@ export const editAppt = (req, res) => {
 };
 
 export const deleteAppt = (req, res) => {
-  console.log('Delete stuff!');
-  console.log(req.query);
+  const appointmentID = Object.keys(req.query)[0];
+  pool.query('DELETE FROM appointments WHERE id = $1', [appointmentID]).then((deleteResult) => {
+    res.redirect('/');
+  });
   // res.redirect('/');
 };
