@@ -1,4 +1,5 @@
 import pg from 'pg';
+import { DateTime } from 'luxon';
 
 const { Pool } = pg;
 
@@ -27,15 +28,27 @@ export const mainPage = (req, res) => {
 };
 
 export const homePage = (req, res) => {
-  const getApptsQuery = 'SELECT  patients.name AS "Patient", patients.relationship AS "Relationship", hospital_visits.date AS "Date", hospitals.name AS "Hospital", departments.name as "Department", appointments.time AS "Time" FROM patients INNER JOIN hospital_visits ON patients.id = hospital_visits.patient_id INNER JOIN appointments ON hospital_visits.id = appointments.visit_id INNER JOIN departments ON appointments.department_id = departments.id INNER JOIN hospitals ON hospital_visits.hospital_id = hospitals.id;';
+  const getApptsQuery = 'SELECT  patients.name , patients.relationship , hospital_visits.date , hospitals.name AS hospital, departments.name as department, appointments.time  FROM patients INNER JOIN hospital_visits ON patients.id = hospital_visits.patient_id INNER JOIN appointments ON hospital_visits.id = appointments.visit_id INNER JOIN departments ON appointments.department_id = departments.id INNER JOIN hospitals ON hospital_visits.hospital_id = hospitals.id;';
   pool.query(getApptsQuery).then((apptsResult) => {
     const apptData = [];
     const apptArray = apptsResult.rows;
     for (let i = 0; i < apptArray.length; i += 1) {
       apptData.push(Object.values(apptArray[i]));
     }
-    console.log(apptData);
-    res.render('home', { apptData });
+    for (let k = 0; k < apptData.length; k += 1) {
+      console.log(apptData[k][2]);
+      apptData[k][2] = DateTime.fromISO(apptData[k][2]).toFormat('dd-MMM-yyyy');
+    }
+    return pool.query('SELECT id FROM appointments').then((apptIdResults) => {
+      const apptIdArray = [];
+      const apptIdList = apptIdResults.rows;
+      for (let j = 0; j < apptIdList.length; j += 1) {
+        apptIdArray.push(apptIdList[j].id);
+      }
+
+      apptData.push(apptIdArray);
+      res.render('home', { apptData });
+    });
   });
 };
 
@@ -72,13 +85,9 @@ export const newInfo = (req, res) => {
     const departmentQuery = 'INSERT INTO departments (name) VALUES ($1) RETURNING *';
     pool.query(departmentQuery, departmentArray).then((departmentResult) => {
       newInfoArray.push({ 'New Department': `${departmentResult.rows[0].name}` });
-      // console.log(newInfoArray);
-      console.log('INSIDE LAWST QUERY');
       res.redirect('/add-info-new');
     });
   } else {
-    console.log('AFTER LAWST QUERY');
-
     res.redirect('/add-info-new');
   }
 };
@@ -110,11 +119,13 @@ export const addApptForm = (req, res) => {
 };
 
 export const addAppt = (req, res) => {
+  console.log(req.body.date);
+  console.log(typeof req.body.date);
+
   pool.query('SELECT id FROM patients WHERE name = $1', [req.body['patient-name']]).then((patientResults) => {
     const patientID = patientResults.rows[0].id;
     return pool.query('SELECT id FROM hospitals WHERE name = $1', [req.body.hospital]).then((hospResults) => {
       const hospitalID = hospResults.rows[0].id;
-      console.log(patientID, hospitalID);
       const visitData = [req.body.date, hospitalID, patientID];
       return pool.query('INSERT INTO hospital_visits (date, hospital_id, patient_id) VALUES ($1, $2, $3) RETURNING *', visitData).then((insertResults) => {
         const visitID = insertResults.rows[0].id;
@@ -122,7 +133,6 @@ export const addAppt = (req, res) => {
           const departmentID = departmentResults.rows[0].id;
           const appointmentData = [visitID, departmentID, req.body.time];
           return pool.query('INSERT INTO appointments (visit_id, department_id, time) VALUES ($1, $2, $3)', appointmentData).then((apptResults) => {
-            console.log('done!');
           });
         });
       });
@@ -138,4 +148,7 @@ export const editAppt = (req, res) => {
 };
 
 export const deleteAppt = (req, res) => {
+  console.log('Delete stuff!');
+  console.log(req.query);
+  // res.redirect('/');
 };

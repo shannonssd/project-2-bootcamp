@@ -12,7 +12,7 @@ relationship TEXT
 
 CREATE TABLE IF NOT EXISTS hospital_visits (
 id SERIAL PRIMARY KEY,
-date DATE,
+date TEXT,
 hospital_id INTEGER,
 patient_id INTEGER
 );

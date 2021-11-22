@@ -41,5 +41,5 @@ app.get('/add-appt', addApptForm);
 app.post('/add-appt', addAppt);
 app.get('/edit-appt', editApptForm);
 app.put('/edit-appt', editAppt);
-app.delete('/delete-appt', deleteAppt);
+app.get('/delete-appt', deleteAppt);
 app.listen(PORT);

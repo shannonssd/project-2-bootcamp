@@ -16,11 +16,22 @@
         <th>Department</th>
         <th>Time</th>
       </tr>
-      <% for(let i = 0; i< apptData.length; i +=1){ %>
+      <% for(let i = 0; i< apptData.length - 1; i +=1){ %>
       <tr>
         <% for(let j = 0; j< 6; j +=1){ %>
         <th><%= apptData[i][j] %></th>
         <% } %>
+        <th>
+          <form action="/delete-appt">
+            <label for="submit"></label>
+            <input
+              type="submit"
+              id="submit"
+              name="<%= apptData[apptData.length - 1][i] %>"
+              value="Delete"
+            />
+          </form>
+        </th>
       </tr>
       <% } %>
     </table>
