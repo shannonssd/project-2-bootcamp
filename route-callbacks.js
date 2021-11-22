@@ -46,6 +46,7 @@ export const homePage = (req, res) => {
       }
 
       apptData.push(apptIdArray);
+      // return pool.query('SELECT id FROM hospital_visit').then
       res.render('home', { apptData });
     });
   });
@@ -118,6 +119,7 @@ export const addApptForm = (req, res) => {
 };
 
 export const addAppt = (req, res) => {
+  console.log(req.body);
   pool.query('SELECT id FROM patients WHERE name = $1', [req.body['patient-name']]).then((patientResults) => {
     const patientID = patientResults.rows[0].id;
     return pool.query('SELECT id FROM hospitals WHERE name = $1', [req.body.hospital]).then((hospResults) => {
@@ -125,6 +127,7 @@ export const addAppt = (req, res) => {
       const visitData = [req.body.date, hospitalID, patientID];
       return pool.query('INSERT INTO hospital_visits (date, hospital_id, patient_id) VALUES ($1, $2, $3) RETURNING *', visitData).then((insertResults) => {
         const visitID = insertResults.rows[0].id;
+        // ?????? Use req.body.department.length to run loop
         return pool.query('SELECT id FROM departments WHERE name = $1', [req.body.department]).then((departmentResults) => {
           const departmentID = departmentResults.rows[0].id;
           const appointmentData = [visitID, departmentID, req.body.time];
@@ -142,6 +145,10 @@ export const editApptForm = (req, res) => {
 };
 
 export const editAppt = (req, res) => {
+  // Store visit_id and appt_id -> retrieve date, time.
+  // Compare to new req.body date and time
+  // If date diff -> delete appt & add new hospital_visit & appt
+  // If only time change then ALTER appointments table
 };
 
 export const deleteAppt = (req, res) => {

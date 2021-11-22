@@ -22,21 +22,51 @@
         <%})%>
       </select>
       <br /><br />
-      Department:
+      Date:
+      <label for="date" name="dateForm"></label>
+      <input type="date" id="date" name="date" />
+      <br /><br />
+
+      <table>
+        <tr>
+          <th>Department:</th>
+          <th>Time:</th>
+        </tr>
+
+        <% formData[2].forEach((element) => { %>
+        <tr>
+          <td>
+            <label for="department"><%= element.name %></label>
+            <input
+              type="checkbox"
+              id="department"
+              name="department"
+              value="<%= element.name %>"
+            />
+          </td>
+
+          <td>
+            <label for="time"></label>
+            <input type="time" id="time" name="time" />
+          </td>
+        </tr>
+        <%})%>
+      </table>
+      <input type="submit" value="Submit" />
+
+      <br /><br />
+      <!-- Department:
       <select name="department" id="department">
         <% formData[2].forEach((element) => { %>
         <option value="<%= element.name %>"><%= element.name %></option>
         <%})%>
       </select>
-      <br /><br />
-      Date:
-      <label for="date" name="dateForm"></label>
-      <input type="date" id="date" name="date" />
-      <br /><br />
-      Time:
+      <br /><br /> -->
+
+      <!-- Time:
       <label for="time"></label>
       <input type="time" id="time" name="time" /><br /><br />
-      <input type="submit" value="Submit" />
+      <input type="submit" value="Submit" /> -->
     </form>
   </body>
 </html>
