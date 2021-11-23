@@ -128,13 +128,33 @@ export const addAppt = (req, res) => {
       return pool.query('INSERT INTO hospital_visits (date, hospital_id, patient_id) VALUES ($1, $2, $3) RETURNING *', visitData).then((insertResults) => {
         const visitID = insertResults.rows[0].id;
         // ?????? Use req.body.department.length to run loop
-        return pool.query('SELECT id FROM departments WHERE name = $1', [req.body.department]).then((departmentResults) => {
-          const departmentID = departmentResults.rows[0].id;
-          const appointmentData = [visitID, departmentID, req.body.time];
-          return pool.query('INSERT INTO appointments (visit_id, department_id, time) VALUES ($1, $2, $3)', appointmentData).then((apptResults) => {
-            res.redirect('/');
-          });
-        });
+        if (typeof req.body.department === 'object') {
+          const timeArray = req.body.time;
+          for (let i = 0; i < req.body.department.length; i += 1) {
+            console.log('1');
+            pool.query('SELECT id FROM departments WHERE name = $1', [req.body.department[i]]).then((departmentResults) => {
+              const departmentID = departmentResults.rows[0].id;
+              const appointmentData = [visitID, departmentID, timeArray[i]];
+              console.log('2');
+
+              pool.query('INSERT INTO appointments (visit_id, department_id, time) VALUES ($1, $2, $3)', appointmentData).then((apptResults) => {
+                console.log('3');
+
+                if (i + 1 === req.body.department.length) {
+                  console.log('4');
+                  res.redirect('/');
+                }
+              });
+            });
+          }
+        }
+        // return pool.query('SELECT id FROM departments WHERE name = $1', [req.body.department]).then((departmentResults) => {
+        //   const departmentID = departmentResults.rows[0].id;
+        //   const appointmentData = [visitID, departmentID, req.body.time];
+        //   return pool.query('INSERT INTO appointments (visit_id, department_id, time) VALUES ($1, $2, $3)', appointmentData).then((apptResults) => {
+        //     res.redirect('/');
+        //   });
+        // });
       });
     });
   });
