@@ -28,7 +28,8 @@ export const mainPage = (req, res) => {
 };
 
 export const homePage = (req, res) => {
-  const getApptsQuery = 'SELECT  patients.name , patients.relationship , hospital_visits.date , hospitals.name AS hospital, departments.name as department, appointments.time  FROM patients INNER JOIN hospital_visits ON patients.id = hospital_visits.patient_id INNER JOIN appointments ON hospital_visits.id = appointments.visit_id INNER JOIN departments ON appointments.department_id = departments.id INNER JOIN hospitals ON hospital_visits.hospital_id = hospitals.id;';
+  const getApptsQuery = 'SELECT patients.name, patients.relationship, hospital_visits.date, hospitals.name AS hospital, departments.name as department, appointments.time FROM patients INNER JOIN appointments ON patients.id = appointments.patient_id INNER JOIN hospital_visits ON hospital_visits.id = appointments.visit_id INNER JOIN departments ON appointments.department_id = departments.id INNER JOIN hospitals ON hospital_visits.hospital_id = hospitals.id';
+
   pool.query(getApptsQuery).then((apptsResult) => {
     const apptData = [];
     const apptArray = apptsResult.rows;
@@ -118,26 +119,75 @@ export const addApptForm = (req, res) => {
   });
 };
 
+// export const addAppt = (req, res) => {
+//   console.log(req.body);
+//   pool.query('SELECT id FROM patients WHERE name = $1', [req.body['patient-name']]).then((patientResults) => {
+//     const patientID = patientResults.rows[0].id;
+//     return pool.query('SELECT id FROM hospitals WHERE name = $1', [req.body.hospital]).then((hospResults) => {
+//       const hospitalID = hospResults.rows[0].id;
+//       const visitData = [req.body.date, hospitalID, patientID];
+//       return pool.query('INSERT INTO hospital_visits (date, hospital_id, patient_id) VALUES ($1, $2, $3) RETURNING *', visitData).then((insertResults) => {
+//         const visitID = insertResults.rows[0].id;
+//         // ?????? Use req.body.department.length to run loop
+//         if (typeof req.body.department === 'object') {
+//           const timeArray = req.body.time;
+//           for (let i = 0; i < req.body.department.length; i += 1) {
+//             console.log('1');
+//             pool.query('SELECT id FROM departments WHERE name = $1', [req.body.department[i]]).then((departmentResults) => {
+//               const departmentID = departmentResults.rows[0].id;
+//               const appointmentData = [visitID, departmentID, timeArray[i]];
+//               console.log('2');
+
+//               pool.query('INSERT INTO appointments (visit_id, department_id, time) VALUES ($1, $2, $3)', appointmentData).then((apptResults) => {
+//                 console.log('3');
+
+//                 if (i + 1 === req.body.department.length) {
+//                   console.log('4');
+//                   res.redirect('/');
+//                 }
+//               });
+//             });
+//           }
+//         }
+//       });
+//     });
+//   });
+// };
+
 export const addAppt = (req, res) => {
+  let visitID = 0;
   console.log(req.body);
   pool.query('SELECT id FROM patients WHERE name = $1', [req.body['patient-name']]).then((patientResults) => {
     const patientID = patientResults.rows[0].id;
     return pool.query('SELECT id FROM hospitals WHERE name = $1', [req.body.hospital]).then((hospResults) => {
       const hospitalID = hospResults.rows[0].id;
-      const visitData = [req.body.date, hospitalID, patientID];
-      return pool.query('INSERT INTO hospital_visits (date, hospital_id, patient_id) VALUES ($1, $2, $3) RETURNING *', visitData).then((insertResults) => {
-        const visitID = insertResults.rows[0].id;
-        // ?????? Use req.body.department.length to run loop
+      const hospData = [req.body.date, Number(hospitalID)];
+      const hospVisitQuery = 'SELECT * FROM hospital_visits WHERE date = $1 AND hospital_id = $2';
+      return pool.query(hospVisitQuery, hospData).then((checkHospRes) => {
+        if (checkHospRes.rows.length !== 0) {
+          visitID = checkHospRes.rows[0].id;
+        }
+
+        if (checkHospRes.rows.length === 0) {
+          console.log('No matching hosp visit');
+          const visitData = [req.body.date, hospitalID];
+          pool.query('INSERT INTO hospital_visits (date, hospital_id) VALUES ($1, $2) RETURNING *', visitData).then((insertResults) => {
+            visitID = insertResults.rows[0].id;
+          });
+        }
+        console.log('visitID:', visitID);
+
+        const timeArray = req.body.time;
         if (typeof req.body.department === 'object') {
-          const timeArray = req.body.time;
           for (let i = 0; i < req.body.department.length; i += 1) {
             console.log('1');
+            // eslint-disable-next-line no-loop-func
             pool.query('SELECT id FROM departments WHERE name = $1', [req.body.department[i]]).then((departmentResults) => {
               const departmentID = departmentResults.rows[0].id;
-              const appointmentData = [visitID, departmentID, timeArray[i]];
+              const appointmentData = [visitID, departmentID, timeArray[i], patientID];
               console.log('2');
 
-              pool.query('INSERT INTO appointments (visit_id, department_id, time) VALUES ($1, $2, $3)', appointmentData).then((apptResults) => {
+              return pool.query('INSERT INTO appointments (visit_id, department_id, time, patient_id) VALUES ($1, $2, $3, $4)', appointmentData).then((apptResults) => {
                 console.log('3');
 
                 if (i + 1 === req.body.department.length) {
@@ -148,18 +198,23 @@ export const addAppt = (req, res) => {
             });
           }
         }
-        // return pool.query('SELECT id FROM departments WHERE name = $1', [req.body.department]).then((departmentResults) => {
-        //   const departmentID = departmentResults.rows[0].id;
-        //   const appointmentData = [visitID, departmentID, req.body.time];
-        //   return pool.query('INSERT INTO appointments (visit_id, department_id, time) VALUES ($1, $2, $3)', appointmentData).then((apptResults) => {
-        //     res.redirect('/');
-        //   });
-        // });
+        if ((typeof req.body.department !== 'object')) {
+          pool.query('SELECT id FROM departments WHERE name = $1', [req.body.department]).then((departmentResults) => {
+            const departmentID = departmentResults.rows[0].id;
+            const appointmentData = [visitID, departmentID, timeArray, patientID];
+            console.log('2');
+
+            pool.query('INSERT INTO appointments (visit_id, department_id, time, patient_id) VALUES ($1, $2, $3, $4)', appointmentData).then((apptResults) => {
+              console.log('3');
+
+              res.redirect('/');
+            });
+          });
+        }
       });
     });
   });
 };
-
 export const editApptForm = (req, res) => {
   res.render('edit-appt');
 };

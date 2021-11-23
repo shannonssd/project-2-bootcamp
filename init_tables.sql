@@ -13,15 +13,15 @@ relationship TEXT
 CREATE TABLE IF NOT EXISTS hospital_visits (
 id SERIAL PRIMARY KEY,
 date TEXT,
-hospital_id INTEGER,
-patient_id INTEGER
+hospital_id INTEGER
 );
 
 CREATE TABLE IF NOT EXISTS appointments (
 id SERIAL PRIMARY KEY,
 visit_id INTEGER,
 department_id INTEGER,
-time TIME
+time TIME,
+patient_id INTEGER
 );
 
 CREATE TABLE IF NOT EXISTS hospitals (
@@ -34,7 +34,7 @@ id SERIAL PRIMARY KEY,
 name TEXT
 );
 
-SELECT  patients.name AS "Patient", patients.relationship AS "Relationship", hospital_visits.date AS "Date", hospitals.name AS "Hospital", departments.name as "Department", appointments.time AS "Time" FROM patients INNER JOIN hospital_visits ON patients.id = hospital_visits.patient_id INNER JOIN appointments ON hospital_visits.id = appointments.visit_id INNER JOIN departments ON appointments.department_id = departments.id INNER JOIN hospitals ON hospital_visits.hospital_id = hospitals.id;
+SELECT patients.name, patients.relationship, hospital_visits.date, hospitals.name AS hospital, departments.name as department, appointments.time FROM patients INNER JOIN appointments ON patients.id = appointments.patient_id INNER JOIN hospital_visits ON hospital_visits.id = appointments.visit_id INNER JOIN departments ON appointments.department_id = departments.id INNER JOIN hospitals ON hospital_visits.hospital_id = hospitals.id
 
 CREATE TABLE IF NOT EXISTS medications (
   id SERIAL PRIMARY KEY,
