@@ -157,3 +157,8 @@ export const deleteAppt = (req, res) => {
     res.redirect('/');
   });
 };
+
+// After add appt form change and edit appt form:
+// 1. Nav bar
+// 2. Session auth
+// 3. Carousell tryout;
