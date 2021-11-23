@@ -26,10 +26,10 @@ app.use(sessionAuth);
 app.get('/signup', signUpForm);
 app.post('/signup', signUpFormResults);
 // Login
-app.get('/login', loginForm);
-app.post('/login', loginFormResults);
+app.get('/main', loginForm);
+app.post('/main', loginFormResults);
 // Logout
-app.delete('/logout', logout);
+app.get('/logout', logout);
 
 // #################### Routes
 app.get('/main', mainPage);

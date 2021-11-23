@@ -6,7 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
+    <%- include('nav', { link: "add-info-style.css" }); %>
+
   <body>
+    <div class="main">
+
+    
     <form action="/add-info" method="POST">
       <label for="new-patient">New Patient:</label><br />
       <input
@@ -38,5 +43,6 @@
       /><br /><br />
       <input type="submit" submit />
     </form>
+    </div>
   </body>
 </html>

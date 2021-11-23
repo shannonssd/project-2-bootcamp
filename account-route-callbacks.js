@@ -36,6 +36,7 @@ export const signUpFormResults = (req, res) => {
   const sqlQuery = 'INSERT INTO users (email, password) VALUES ($1, $2)';
   pool.query(sqlQuery, inputData).then((result) => {
     console.log('user details added!');
+    res.redirect('/');
   });
 };
 
@@ -61,7 +62,7 @@ export const loginFormResults = (req, res) => {
       const hashedCookieString = getHash(enteredEmail[0]);
       res.cookie('loggedInHash', hashedCookieString);
       res.cookie('userId', enteredEmail[0]);
-      res.send('logged in!');
+      res.redirect('/');
     } else {
       res.send('Sorry! Please try again!').status(403);
     }
@@ -72,6 +73,6 @@ export const loginFormResults = (req, res) => {
 export const logout = (req, res) => {
   res.clearCookie('loggedInHash');
   res.clearCookie('userId');
-  res.send('Logged out!');
-  // res.redirect('/');
+  // res.send('Logged out!');
+  res.redirect('/main');
 };
