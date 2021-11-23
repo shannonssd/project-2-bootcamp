@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS appointments (
 id SERIAL PRIMARY KEY,
 visit_id INTEGER,
 department_id INTEGER,
-time TIME,
+time TEXT,
 patient_id INTEGER
 );
 
@@ -34,7 +34,6 @@ id SERIAL PRIMARY KEY,
 name TEXT
 );
 
-SELECT patients.name, patients.relationship, hospital_visits.date, hospitals.name AS hospital, departments.name as department, appointments.time FROM patients INNER JOIN appointments ON patients.id = appointments.patient_id INNER JOIN hospital_visits ON hospital_visits.id = appointments.visit_id INNER JOIN departments ON appointments.department_id = departments.id INNER JOIN hospitals ON hospital_visits.hospital_id = hospitals.id;
 
 CREATE TABLE IF NOT EXISTS medications (
   id SERIAL PRIMARY KEY,
@@ -48,4 +47,6 @@ CREATE TABLE IF NOT EXISTS prescriptions (
   medication_id INTEGER
 );
 
-SELECT prescriptions.id, patients.name AS patient_name, patients.relationship, medications.name AS medication_name, prescriptions.dosage FROM prescriptions INNER JOIN patients ON patients.id = prescriptions.patient_id INNER JOIN medications ON prescriptions.medication_id = medications.id;
+-- SELECT patients.name, patients.relationship, hospital_visits.date, hospitals.name AS hospital, departments.name as department, appointments.time FROM patients INNER JOIN appointments ON patients.id = appointments.patient_id INNER JOIN hospital_visits ON hospital_visits.id = appointments.visit_id INNER JOIN departments ON appointments.department_id = departments.id INNER JOIN hospitals ON hospital_visits.hospital_id = hospitals.id;
+
+-- SELECT prescriptions.id, patients.name AS patient_name, patients.relationship, medications.name AS medication_name, prescriptions.dosage FROM prescriptions INNER JOIN patients ON patients.id = prescriptions.patient_id INNER JOIN medications ON prescriptions.medication_id = medications.id;

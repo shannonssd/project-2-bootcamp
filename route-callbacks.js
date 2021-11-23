@@ -55,7 +55,6 @@ export const homePage = (req, res) => {
         }
         apptData.push(hospIdArray);
         res.render('home', { apptData });
-        console.log(apptData);
       });
     });
   });
@@ -129,7 +128,6 @@ export const addApptForm = (req, res) => {
 
 export const addAppt = (req, res) => {
   let visitID = 0;
-  console.log(req.body);
   pool.query('SELECT id FROM patients WHERE name = $1', [req.body['patient-name']]).then((patientResults) => {
     const patientID = patientResults.rows[0].id;
     return pool.query('SELECT id FROM hospitals WHERE name = $1', [req.body.hospital]).then((hospResults) => {
@@ -142,29 +140,22 @@ export const addAppt = (req, res) => {
         }
 
         if (checkHospRes.rows.length === 0) {
-          console.log('No matching hosp visit');
           const visitData = [req.body.date, hospitalID];
           pool.query('INSERT INTO hospital_visits (date, hospital_id) VALUES ($1, $2) RETURNING *', visitData).then((insertResults) => {
             visitID = insertResults.rows[0].id;
           });
         }
-        console.log('visitID:', visitID);
 
         const timeArray = req.body.time;
         if (typeof req.body.department === 'object') {
           for (let i = 0; i < req.body.department.length; i += 1) {
-            console.log('1');
             // eslint-disable-next-line no-loop-func
             pool.query('SELECT id FROM departments WHERE name = $1', [req.body.department[i]]).then((departmentResults) => {
               const departmentID = departmentResults.rows[0].id;
               const appointmentData = [visitID, departmentID, timeArray[i], patientID];
-              console.log('2');
 
               return pool.query('INSERT INTO appointments (visit_id, department_id, time, patient_id) VALUES ($1, $2, $3, $4)', appointmentData).then((apptResults) => {
-                console.log('3');
-
                 if (i + 1 === req.body.department.length) {
-                  console.log('4');
                   res.redirect('/');
                 }
               });
@@ -175,11 +166,8 @@ export const addAppt = (req, res) => {
           pool.query('SELECT id FROM departments WHERE name = $1', [req.body.department]).then((departmentResults) => {
             const departmentID = departmentResults.rows[0].id;
             const appointmentData = [visitID, departmentID, timeArray, patientID];
-            console.log('2');
 
             pool.query('INSERT INTO appointments (visit_id, department_id, time, patient_id) VALUES ($1, $2, $3, $4)', appointmentData).then((apptResults) => {
-              console.log('3');
-
               res.redirect('/');
             });
           });
@@ -188,31 +176,66 @@ export const addAppt = (req, res) => {
     });
   });
 };
+
+let appointmentID = 0;
+let hospitalVisitID = 0;
+
 export const editApptForm = (req, res) => {
   const stringApptAndHosp = Object.keys(req.query);
   const arrayApptAndHosp = stringApptAndHosp[0].split(',');
-  const appointmentID = Number(arrayApptAndHosp[0]);
-  const hospitalVisitID = Number(arrayApptAndHosp[1]);
+  appointmentID = Number(arrayApptAndHosp[0]);
+  hospitalVisitID = Number(arrayApptAndHosp[1]);
 
   const editQuery = 'SELECT patients.name, patients.relationship, hospital_visits.date, hospitals.name AS hospital, departments.name as department, appointments.time FROM patients INNER JOIN appointments ON patients.id = appointments.patient_id INNER JOIN hospital_visits ON hospital_visits.id = appointments.visit_id INNER JOIN departments ON appointments.department_id = departments.id INNER JOIN hospitals ON hospital_visits.hospital_id = hospitals.id WHERE appointments.id = $1';
 
   return pool.query(editQuery, [appointmentID]).then((editResult) => {
     const editFormInput = editResult.rows[0];
-    console.log(editFormInput);
     res.render('edit-appt', { editFormInput });
   });
 };
-
+let oldDate = '';
+let oldTime = '';
 export const editAppt = (req, res) => {
-  // Store visit_id and appt_id -> retrieve date, time.
-  // Compare to new req.body date and time
-  // If date diff -> delete appt & add new hospital_visit & appt
-  // If only time change then ALTER appointments table
+  console.log('newtime:', req.body.time);
+  console.log('newdate:', req.body.date);
+  const newTime = req.body.time;
+  const newDate = req.body.date;
+  pool.query('SELECT date FROM hospital_visits WHERE id = $1', [hospitalVisitID]).then((oldDateResult) => {
+    oldDate = oldDateResult.rows[0].date;
+    console.log('olddate:', oldDate);
+    return pool.query('SELECT time FROM appointments WHERE id = $1', [appointmentID]).then((oldTimeResults) => {
+      oldTime = oldTimeResults.rows[0].time;
+      console.log('olddtime:', oldTime);
+      if (oldDate === newDate) {
+        pool.query('UPDATE appointments SET time = $1 WHERE id = $2', [newTime, appointmentID]);
+        res.redirect('/');
+      } else {
+        // 1. Delete appt row
+        pool.query('DELETE FROM appointments WHERE id = $1', [appointmentID]).then((deletedRequest) => {
+          // 2. Check if hosp visit exists: date + hosp id check for hosp_visit id
+          // Retrive hospital id;
+          pool.query('SELECT hospital_visits.hospital_id FROM patients INNER JOIN appointments ON patients.id = appointments.patient_id INNER JOIN hospital_visits ON hospital_visits.id = appointments.visit_id INNER JOIN departments ON appointments.department_id = departments.id INNER JOIN hospitals ON hospital_visits.hospital_id = hospitals.id WHERE appointments.id = $1 AND appointments.visit_id = $2', [appointmentID, hospitalVisitID]).then((hosResult) => {
+            const hosID = hosResult.rows[0].hospital_id;
+            pool.query('SELECT * FROM hospital_visits WHERE date = $1 AND hospital_id = $2'[newDate, hosID]).then((latestResult) => {
+              // 2a. if no, create new hosp visit + appt
+              if (latestResult.rows.length === 0) {
+
+              }
+              // 2b. if use, create new appt with visit_id
+              if (latestResult.rows.length !== 0) {
+
+              }
+            });
+          });
+        });
+      }
+    });
+  });
 };
 
 export const deleteAppt = (req, res) => {
-  const appointmentID = Object.keys(req.query)[0];
-  pool.query('DELETE FROM appointments WHERE id = $1', [appointmentID]).then((deleteResult) => {
+  const apptID = Object.keys(req.query)[0];
+  pool.query('DELETE FROM appointments WHERE id = $1', [apptID]).then((deleteResult) => {
     res.redirect('/');
   });
 };
@@ -221,3 +244,4 @@ export const deleteAppt = (req, res) => {
 // 1. Nav bar
 // 2. Session auth
 // 3. Carousell tryout;
+// 4. Filter sort
