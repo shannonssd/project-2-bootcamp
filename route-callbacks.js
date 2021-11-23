@@ -45,10 +45,18 @@ export const homePage = (req, res) => {
       for (let j = 0; j < apptIdList.length; j += 1) {
         apptIdArray.push(apptIdList[j].id);
       }
-
       apptData.push(apptIdArray);
-      // return pool.query('SELECT id FROM hospital_visit').then
-      res.render('home', { apptData });
+      const hospQuery = 'SELECT hospital_visits.id FROM patients INNER JOIN appointments ON patients.id = appointments.patient_id INNER JOIN hospital_visits ON hospital_visits.id = appointments.visit_id INNER JOIN departments ON appointments.department_id = departments.id INNER JOIN hospitals ON hospital_visits.hospital_id = hospitals.id';
+      return pool.query(hospQuery).then((HospIdResults) => {
+        const hospIdArray = [];
+        const hospIdList = HospIdResults.rows;
+        for (let j = 0; j < hospIdList.length; j += 1) {
+          hospIdArray.push(hospIdList[j].id);
+        }
+        apptData.push(hospIdArray);
+        res.render('home', { apptData });
+        console.log(apptData);
+      });
     });
   });
 };
@@ -119,41 +127,6 @@ export const addApptForm = (req, res) => {
   });
 };
 
-// export const addAppt = (req, res) => {
-//   console.log(req.body);
-//   pool.query('SELECT id FROM patients WHERE name = $1', [req.body['patient-name']]).then((patientResults) => {
-//     const patientID = patientResults.rows[0].id;
-//     return pool.query('SELECT id FROM hospitals WHERE name = $1', [req.body.hospital]).then((hospResults) => {
-//       const hospitalID = hospResults.rows[0].id;
-//       const visitData = [req.body.date, hospitalID, patientID];
-//       return pool.query('INSERT INTO hospital_visits (date, hospital_id, patient_id) VALUES ($1, $2, $3) RETURNING *', visitData).then((insertResults) => {
-//         const visitID = insertResults.rows[0].id;
-//         // ?????? Use req.body.department.length to run loop
-//         if (typeof req.body.department === 'object') {
-//           const timeArray = req.body.time;
-//           for (let i = 0; i < req.body.department.length; i += 1) {
-//             console.log('1');
-//             pool.query('SELECT id FROM departments WHERE name = $1', [req.body.department[i]]).then((departmentResults) => {
-//               const departmentID = departmentResults.rows[0].id;
-//               const appointmentData = [visitID, departmentID, timeArray[i]];
-//               console.log('2');
-
-//               pool.query('INSERT INTO appointments (visit_id, department_id, time) VALUES ($1, $2, $3)', appointmentData).then((apptResults) => {
-//                 console.log('3');
-
-//                 if (i + 1 === req.body.department.length) {
-//                   console.log('4');
-//                   res.redirect('/');
-//                 }
-//               });
-//             });
-//           }
-//         }
-//       });
-//     });
-//   });
-// };
-
 export const addAppt = (req, res) => {
   let visitID = 0;
   console.log(req.body);
@@ -216,7 +189,18 @@ export const addAppt = (req, res) => {
   });
 };
 export const editApptForm = (req, res) => {
-  res.render('edit-appt');
+  const stringApptAndHosp = Object.keys(req.query);
+  const arrayApptAndHosp = stringApptAndHosp[0].split(',');
+  const appointmentID = Number(arrayApptAndHosp[0]);
+  const hospitalVisitID = Number(arrayApptAndHosp[1]);
+
+  const editQuery = 'SELECT patients.name, patients.relationship, hospital_visits.date, hospitals.name AS hospital, departments.name as department, appointments.time FROM patients INNER JOIN appointments ON patients.id = appointments.patient_id INNER JOIN hospital_visits ON hospital_visits.id = appointments.visit_id INNER JOIN departments ON appointments.department_id = departments.id INNER JOIN hospitals ON hospital_visits.hospital_id = hospitals.id WHERE appointments.id = $1';
+
+  return pool.query(editQuery, [appointmentID]).then((editResult) => {
+    const editFormInput = editResult.rows[0];
+    console.log(editFormInput);
+    res.render('edit-appt', { editFormInput });
+  });
 };
 
 export const editAppt = (req, res) => {
