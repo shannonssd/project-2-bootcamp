@@ -193,43 +193,47 @@ export const editApptForm = (req, res) => {
     res.render('edit-appt', { editFormInput });
   });
 };
+
 let oldDate = '';
-let oldTime = '';
+// let oldTime = '';
 export const editAppt = (req, res) => {
-  console.log('newtime:', req.body.time);
-  console.log('newdate:', req.body.date);
   const newTime = req.body.time;
   const newDate = req.body.date;
   pool.query('SELECT date FROM hospital_visits WHERE id = $1', [hospitalVisitID]).then((oldDateResult) => {
     oldDate = oldDateResult.rows[0].date;
-    console.log('olddate:', oldDate);
-    return pool.query('SELECT time FROM appointments WHERE id = $1', [appointmentID]).then((oldTimeResults) => {
-      oldTime = oldTimeResults.rows[0].time;
-      console.log('olddtime:', oldTime);
-      if (oldDate === newDate) {
-        pool.query('UPDATE appointments SET time = $1 WHERE id = $2', [newTime, appointmentID]);
-        res.redirect('/');
-      } else {
+    if (oldDate === newDate) {
+      pool.query('UPDATE appointments SET time = $1 WHERE id = $2', [newTime, appointmentID]);
+      res.redirect('/');
+    } else {
+      // 2. Check if hosp visit exists: date + hosp id check for hosp_visit id
+      // Retrive hospital id;
+      pool.query('SELECT hospital_visits.hospital_id, appointments.patient_id, appointments.department_id FROM patients INNER JOIN appointments ON patients.id = appointments.patient_id INNER JOIN hospital_visits ON hospital_visits.id = appointments.visit_id INNER JOIN departments ON appointments.department_id = departments.id INNER JOIN hospitals ON hospital_visits.hospital_id = hospitals.id WHERE appointments.id = $1 AND appointments.visit_id = $2', [appointmentID, hospitalVisitID]).then((hosResult) => {
+        const hosID = hosResult.rows[0].hospital_id;
+        const patID = hosResult.rows[0].patient_id;
+        const departID = hosResult.rows[0].department_id;
         // 1. Delete appt row
         pool.query('DELETE FROM appointments WHERE id = $1', [appointmentID]).then((deletedRequest) => {
-          // 2. Check if hosp visit exists: date + hosp id check for hosp_visit id
-          // Retrive hospital id;
-          pool.query('SELECT hospital_visits.hospital_id FROM patients INNER JOIN appointments ON patients.id = appointments.patient_id INNER JOIN hospital_visits ON hospital_visits.id = appointments.visit_id INNER JOIN departments ON appointments.department_id = departments.id INNER JOIN hospitals ON hospital_visits.hospital_id = hospitals.id WHERE appointments.id = $1 AND appointments.visit_id = $2', [appointmentID, hospitalVisitID]).then((hosResult) => {
-            const hosID = hosResult.rows[0].hospital_id;
-            pool.query('SELECT * FROM hospital_visits WHERE date = $1 AND hospital_id = $2'[newDate, hosID]).then((latestResult) => {
-              // 2a. if no, create new hosp visit + appt
-              if (latestResult.rows.length === 0) {
-
-              }
-              // 2b. if use, create new appt with visit_id
-              if (latestResult.rows.length !== 0) {
-
-              }
-            });
+          pool.query('SELECT * FROM hospital_visits WHERE date = $1 AND hospital_id = $2', [newDate, hosID]).then((latestResult) => {
+            // 2a. if no, create new hosp visit + appt
+            if (latestResult.rows.length === 0) {
+              pool.query('INSERT INTO hospital_visits (date, hospital_id) VALUES ($1, $2) RETURNING *', [newDate, hosID]).then((newResult) => {
+                const hosVisitID = newResult.rows[0].id;
+                pool.query('INSERT INTO appointments (visit_id, department_id, time, patient_id) VALUES ($1, $2, $3, $4)', [hosVisitID, departID, newTime, patID]).then((results) => {
+                  res.redirect('/');
+                });
+              });
+            }
+            // 2b. if use, create new appt with visit_id
+            if (latestResult.rows.length !== 0) {
+              const visitExistsID = latestResult.rows[0].id;
+              pool.query('INSERT INTO appointments (visit_id, department_id, time, patient_id) VALUES ($1, $2, $3, $4)', [visitExistsID, departID, newTime, patID]).then((lastResult) => {
+                res.redirect('/');
+              });
+            }
           });
         });
-      }
-    });
+      });
+    }
   });
 };
 
