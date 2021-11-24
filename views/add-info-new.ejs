@@ -6,15 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
-      <%- include('nav', { link: "add-info-new-style.css" }); %>
+  <%- include('nav', { link: "add-info-new-style.css" }); %>
 
   <body>
     <div class="main">
-    <div> You have submitted the following:</div>   
-    <% newInfoArray.forEach((element) => { %>
-      <div><%= Object.keys(element)[0] %> : <%= Object.values(element)[0]; %></div><br/>
+      <div>You have submitted the following:</div>
+      <% newInfoArray.forEach((element) => { %>
+      <div>
+        <%= Object.keys(element)[0] %> : <%= Object.values(element)[0] %>
+      </div>
       <% }); %>
       <button><a href="/">Home</a></button>
-      </div>
+    </div>
   </body>
 </html>

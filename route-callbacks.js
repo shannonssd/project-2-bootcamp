@@ -104,11 +104,12 @@ export const newInfo = (req, res) => {
       const departmentQuery = 'INSERT INTO departments (name) VALUES ($1) RETURNING *';
       pool.query(departmentQuery, departmentArray).then((departmentResult) => {
         newInfoArray.push({ 'New Department': `${departmentResult.rows[0].name}` });
-        res.redirect('/add-info-new');
       });
-    } else {
-      res.redirect('/add-info-new');
     }
+    res.redirect('/add-info-new');
+    // else {
+    //   res.redirect('/add-info-new');
+    // }
   }
 };
 
