@@ -36,7 +36,7 @@ export const signUpFormResults = (req, res) => {
   const sqlQuery = 'INSERT INTO users (email, password) VALUES ($1, $2)';
   pool.query(sqlQuery, inputData).then((result) => {
     console.log('user details added!');
-    res.redirect('/');
+    res.redirect('/main');
   });
 };
 
