@@ -87,17 +87,14 @@ export const newInfo = (req, res) => {
     newInfoArray = [];
     const newPatient = req.body['new-patient'];
     const { relationship } = req.body;
+    newInfoArray.push({ 'Patient Name': `${newPatient}` });
+    newInfoArray.push({ 'Relationship to User': `${relationship}` });
 
-    if (newPatient !== '') {
-      const patientArray = [newPatient, relationship];
-      const patientQuery = 'INSERT INTO patients (name, relationship) VALUES ($1, $2) RETURNING *';
-      pool.query(patientQuery, patientArray).then((patientResult) => {
-        newInfoArray.push({ 'Patient Name': `${patientResult.rows[0].name}` });
-        newInfoArray.push({ 'Relationship to User': `${patientResult.rows[0].relationship}` });
-      });
-    }
-
-    res.redirect('/add-info-new');
+    const patientArray = [newPatient, relationship];
+    const patientQuery = 'INSERT INTO patients (name, relationship) VALUES ($1, $2) RETURNING *';
+    pool.query(patientQuery, patientArray).then((patientResult) => {
+      res.redirect('/add-info-new');
+    });
   }
 };
 
@@ -105,6 +102,7 @@ export const newInfoDisplay = (req, res) => {
   if (req.isUserLoggedIn === false) {
     res.redirect('/main');
   } else {
+    console.log(newInfoArray);
     res.render('add-info-new', { newInfoArray });
   }
 };
@@ -125,16 +123,13 @@ export const newInfoHos = (req, res) => {
     newInfoArrayHos = [];
 
     const newHospital = req.body['new-hospital'];
+    newInfoArrayHos.push({ 'New Hospital': `${newHospital}` });
 
-    if (newHospital !== '') {
-      const hospitalArray = [newHospital];
-      const hospitalQuery = 'INSERT INTO hospitals (name) VALUES ($1) RETURNING *';
-      pool.query(hospitalQuery, hospitalArray).then((hospitalResult) => {
-        newInfoArrayHos.push({ 'New Hospital': `${hospitalResult.rows[0].name}` });
-      });
-    }
-
-    res.redirect('/add-info-new/hospital');
+    const hospitalArray = [newHospital];
+    const hospitalQuery = 'INSERT INTO hospitals (name) VALUES ($1) RETURNING *';
+    pool.query(hospitalQuery, hospitalArray).then((hospitalResult) => {
+      res.redirect('/add-info-new/hospital');
+    });
   }
 };
 
@@ -142,6 +137,8 @@ export const newInfoDisplayHos = (req, res) => {
   if (req.isUserLoggedIn === false) {
     res.redirect('/main');
   } else {
+    console.log(newInfoArrayHos);
+
     res.render('add-info-new-hos', { newInfoArrayHos });
   }
 };
@@ -162,16 +159,13 @@ export const newInfoDep = (req, res) => {
     newInfoArrayDep = [];
 
     const newDepartment = req.body['new-department'];
+    newInfoArrayDep.push({ 'New Department': `${newDepartment}` });
 
-    if (newDepartment !== '') {
-      const departmentArray = [newDepartment];
-      const departmentQuery = 'INSERT INTO departments (name) VALUES ($1) RETURNING *';
-      pool.query(departmentQuery, departmentArray).then((departmentResult) => {
-        newInfoArray.push({ 'New Department': `${departmentResult.rows[0].name}` });
-      });
-    }
-
-    res.redirect('/add-info-new/department');
+    const departmentArray = [newDepartment];
+    const departmentQuery = 'INSERT INTO departments (name) VALUES ($1) RETURNING *';
+    pool.query(departmentQuery, departmentArray).then((departmentResult) => {
+      res.redirect('/add-info-new/department');
+    });
   }
 };
 
@@ -179,6 +173,8 @@ export const newInfoDisplayDep = (req, res) => {
   if (req.isUserLoggedIn === false) {
     res.redirect('/main');
   } else {
+    console.log(newInfoArrayDep);
+
     res.render('add-info-new-dep', { newInfoArrayDep });
   }
 };
