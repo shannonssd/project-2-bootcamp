@@ -212,10 +212,10 @@ export const homePagePatient = (req, res) => {
           const monthsArray = Object.values(monthsObj);
 
           // Filter by patients based on user's choice
-          if (Object.keys(req.query)[0] === 'filter-patient') {
+          if (Object.keys(req.query)[0] === 'filter-month') {
             console.log('filter working');
-            const filteredName = req.query['filter-patient'];
-            apptData = apptData.filter((element) => element[0] === filteredName);
+            const filteredMonth = req.query['filter-month'];
+            apptData = apptData.filter((element) => element[2].split('-')[1] === filteredMonth);
             console.log(apptData);
           }
 
