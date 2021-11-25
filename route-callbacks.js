@@ -404,12 +404,18 @@ export const addAppt = (req, res) => {
           }
 
           const timeArray = req.body.time;
+          const latestTimeArray = [];
+          for (let i = 0; i < timeArray.length; i += 1) {
+            if (timeArray[i] !== '') {
+              latestTimeArray.push(timeArray[i]);
+            }
+          }
           if (typeof req.body.department === 'object') {
             for (let i = 0; i < req.body.department.length; i += 1) {
             // eslint-disable-next-line no-loop-func
               pool.query('SELECT id FROM departments WHERE name = $1', [req.body.department[i]]).then((departmentResults) => {
                 const departmentID = departmentResults.rows[0].id;
-                const appointmentData = [visitID, departmentID, timeArray[i], patientID];
+                const appointmentData = [visitID, departmentID, latestTimeArray[i], patientID];
 
                 return pool.query('INSERT INTO appointments (visit_id, department_id, time, patient_id) VALUES ($1, $2, $3, $4)', appointmentData).then((apptResults) => {
                   if (i + 1 === req.body.department.length) {
@@ -422,7 +428,7 @@ export const addAppt = (req, res) => {
           if ((typeof req.body.department !== 'object')) {
             pool.query('SELECT id FROM departments WHERE name = $1', [req.body.department]).then((departmentResults) => {
               const departmentID = departmentResults.rows[0].id;
-              const appointmentData = [visitID, departmentID, timeArray, patientID];
+              const appointmentData = [visitID, departmentID, latestTimeArray[0], patientID];
 
               pool.query('INSERT INTO appointments (visit_id, department_id, time, patient_id) VALUES ($1, $2, $3, $4)', appointmentData).then((apptResults) => {
                 res.redirect('/');
