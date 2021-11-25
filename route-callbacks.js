@@ -40,29 +40,36 @@ export const homePage = (req, res) => {
         apptData.push(Object.values(apptArray[i]));
       }
 
-      apptData.sort((a, b) =>
-        // Turn your strings into dates, and then subtract them
-        // to get a value that is either negative, positive, or zero.
-        new Date(a[2]) - new Date(b[2]));
+      // apptData.sort((a, b) =>
+      //   // Turn your strings into dates, and then subtract them
+      //   // to get a value that is either negative, positive, or zero.
+      //   new Date(a[2]) - new Date(b[2]));
 
       for (let k = 0; k < apptData.length; k += 1) {
         apptData[k][2] = DateTime.fromISO(apptData[k][2]).toFormat('dd-MMM-yyyy');
       }
       return pool.query('SELECT id FROM appointments').then((apptIdResults) => {
-        const apptIdArray = [];
+        // const apptIdArray = [];
         const apptIdList = apptIdResults.rows;
         for (let j = 0; j < apptIdList.length; j += 1) {
-          apptIdArray.push(apptIdList[j].id);
+          apptData[j].push(apptIdList[j].id);
         }
-        apptData.push(apptIdArray);
+        // apptData.push(apptIdArray);
         const hospQuery = 'SELECT hospital_visits.id FROM patients INNER JOIN appointments ON patients.id = appointments.patient_id INNER JOIN hospital_visits ON hospital_visits.id = appointments.visit_id INNER JOIN departments ON appointments.department_id = departments.id INNER JOIN hospitals ON hospital_visits.hospital_id = hospitals.id';
         return pool.query(hospQuery).then((HospIdResults) => {
-          const hospIdArray = [];
+          // const hospIdArray = [];
           const hospIdList = HospIdResults.rows;
           for (let j = 0; j < hospIdList.length; j += 1) {
-            hospIdArray.push(hospIdList[j].id);
+            apptData[j].push(hospIdList[j].id);
           }
-          apptData.push(hospIdArray);
+
+          apptData.sort((a, b) =>
+          // Turn your strings into dates, and then subtract them
+          // to get a value that is either negative, positive, or zero.
+            new Date(a[2]) - new Date(b[2]));
+
+          console.log(apptData);
+          // apptData.push(hospIdArray);
           res.render('home', { apptData });
         });
       });
