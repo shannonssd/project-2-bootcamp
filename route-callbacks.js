@@ -68,7 +68,7 @@ export const newInfoForm = (req, res) => {
   if (req.isUserLoggedIn === false) {
     res.redirect('/main');
   } else {
-    res.render('add-patient');
+    res.render('add-info');
   }
 };
 
@@ -117,7 +117,7 @@ export const newInfoDisplay = (req, res) => {
   if (req.isUserLoggedIn === false) {
     res.redirect('/main');
   } else {
-    res.render('add-patient-new', { newInfoArray });
+    res.render('add-info-new', { newInfoArray });
   }
 };
 
