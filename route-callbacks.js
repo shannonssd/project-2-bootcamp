@@ -68,7 +68,7 @@ export const newInfoForm = (req, res) => {
   if (req.isUserLoggedIn === false) {
     res.redirect('/main');
   } else {
-    res.render('add-info');
+    res.render('add-patient');
   }
 };
 
@@ -104,11 +104,12 @@ export const newInfo = (req, res) => {
       const departmentQuery = 'INSERT INTO departments (name) VALUES ($1) RETURNING *';
       pool.query(departmentQuery, departmentArray).then((departmentResult) => {
         newInfoArray.push({ 'New Department': `${departmentResult.rows[0].name}` });
-        res.redirect('/add-info-new');
       });
-    } else {
-      res.redirect('/add-info-new');
     }
+    res.redirect('/add-info-new');
+    // else {
+    //   res.redirect('/add-info-new');
+    // }
   }
 };
 
@@ -116,7 +117,7 @@ export const newInfoDisplay = (req, res) => {
   if (req.isUserLoggedIn === false) {
     res.redirect('/main');
   } else {
-    res.render('add-info-new', { newInfoArray });
+    res.render('add-patient-new', { newInfoArray });
   }
 };
 

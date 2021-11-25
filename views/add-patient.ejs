@@ -1,0 +1,38 @@
+  <%- include('nav', { link: "add-patient-style.css" }); %>
+
+  <body>
+    <div class="main">
+      <form action="/add-info" method="POST">
+        <label for="new-patient">New Patient:</label><br />
+        <input
+          type="text"
+          id="new-patient"
+          name="new-patient"
+          placeholder="New Patient"
+        /><br /><br />
+        <label for="relationship">Relationship To You:</label><br />
+        <input
+          type="text"
+          id="relationship"
+          name="relationship"
+          placeholder="Relationship To You"
+        /><br /><br />
+        <label for="new-hospital">New Hospital:</label><br />
+        <input
+          type="text"
+          id="new-hospital"
+          name="new-hospital"
+          placeholder="New Hospital"
+        /><br /><br />
+        <label for="new-department">New Department:</label><br />
+        <input
+          type="text"
+          id="new-department"
+          name="new-department"
+          placeholder="New Department"
+        /><br /><br />
+        <input type="submit" submit />
+      </form>
+    </div>
+  </body>
+</html>

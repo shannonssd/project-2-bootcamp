@@ -37,6 +37,11 @@ app.get('/', homePage);
 app.get('/add-info', newInfoForm);
 app.post('/add-info', newInfo);
 app.get('/add-info-new', newInfoDisplay);
+
+app.get('/add-info/hospital', newInfoForm);
+app.post('/add-info/hospital', newInfo);
+app.get('/add-info-new/hospital', newInfoDisplay);
+
 app.get('/add-appt', addApptForm);
 app.post('/add-appt', addAppt);
 app.get('/edit-appt', editApptForm);
