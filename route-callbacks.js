@@ -39,6 +39,12 @@ export const homePage = (req, res) => {
       for (let i = 0; i < apptArray.length; i += 1) {
         apptData.push(Object.values(apptArray[i]));
       }
+
+      apptData.sort((a, b) =>
+        // Turn your strings into dates, and then subtract them
+        // to get a value that is either negative, positive, or zero.
+        new Date(a[2]) - new Date(b[2]));
+
       for (let k = 0; k < apptData.length; k += 1) {
         apptData[k][2] = DateTime.fromISO(apptData[k][2]).toFormat('dd-MMM-yyyy');
       }

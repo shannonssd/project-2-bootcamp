@@ -1,6 +1,7 @@
 import express from 'express';
 import methodOverride from 'method-override';
 import cookieParser from 'cookie-parser';
+// import path from 'path';
 import { sessionAuth } from './hashing.js';
 import {
   signUpForm, signUpFormResults, loginForm, loginFormResults, logout,
