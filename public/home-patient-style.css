@@ -13,22 +13,3 @@ body {
   align-items: center;
   flex-direction: column;
 }
-
-.january,
-.february,
-.march,
-.april,
-.may,
-.june,
-.july,
-.august,
-.september,
-.october,
-.november,
-.december {
-  padding: 15px;
-}
-
-.january-table {
-  display: none;
-}

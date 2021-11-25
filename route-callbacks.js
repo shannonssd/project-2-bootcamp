@@ -60,24 +60,16 @@ export const homePage = (req, res) => {
         apptData.push(Object.values(apptArray[i]));
       }
 
-      // apptData.sort((a, b) =>
-      //   // Turn your strings into dates, and then subtract them
-      //   // to get a value that is either negative, positive, or zero.
-      //   new Date(a[2]) - new Date(b[2]));
-
       for (let k = 0; k < apptData.length; k += 1) {
         apptData[k][2] = DateTime.fromISO(apptData[k][2]).toFormat('dd-MMM-yyyy');
       }
       return pool.query('SELECT id FROM appointments').then((apptIdResults) => {
-        // const apptIdArray = [];
         const apptIdList = apptIdResults.rows;
         for (let j = 0; j < apptIdList.length; j += 1) {
           apptData[j].push(apptIdList[j].id);
         }
-        // apptData.push(apptIdArray);
         const hospQuery = 'SELECT hospital_visits.id FROM patients INNER JOIN appointments ON patients.id = appointments.patient_id INNER JOIN hospital_visits ON hospital_visits.id = appointments.visit_id INNER JOIN departments ON appointments.department_id = departments.id INNER JOIN hospitals ON hospital_visits.hospital_id = hospitals.id';
         return pool.query(hospQuery).then((HospIdResults) => {
-          // const hospIdArray = [];
           const hospIdList = HospIdResults.rows;
           for (let k = 0; k < hospIdList.length; k += 1) {
             apptData[k].push(hospIdList[k].id);
@@ -159,32 +151,42 @@ export const homePagePatient = (req, res) => {
     const getApptsQuery = 'SELECT patients.name, patients.relationship, hospital_visits.date, hospitals.name AS hospital, departments.name as department, appointments.time FROM patients INNER JOIN appointments ON patients.id = appointments.patient_id INNER JOIN hospital_visits ON hospital_visits.id = appointments.visit_id INNER JOIN departments ON appointments.department_id = departments.id INNER JOIN hospitals ON hospital_visits.hospital_id = hospitals.id';
 
     pool.query(getApptsQuery).then((apptsResult) => {
-      let sortMonthArray = [[], [], [], [], [], [], [], [], [], [], [], []];
-
-      const apptData = [];
       const apptArray = apptsResult.rows;
+      // Get list of unique patient names
+      const nameObj = {};
+      for (let i = 0; i < apptArray.length; i += 1) {
+        if (!(apptArray[i].name in nameObj)) {
+          nameObj[apptArray[i].name] = apptArray[i].name;
+        }
+      }
+      const nameArray = Object.values(nameObj);
+
+      // Get list of unique hospital names
+      const hospitalObj = {};
+      for (let i = 0; i < apptArray.length; i += 1) {
+        if (!(apptArray[i].hospital in hospitalObj)) {
+          hospitalObj[apptArray[i].hospital] = apptArray[i].hospital;
+        }
+      }
+
+      const hospitalArray = Object.values(hospitalObj);
+
+      let apptData = [];
       for (let i = 0; i < apptArray.length; i += 1) {
         apptData.push(Object.values(apptArray[i]));
       }
 
-      // apptData.sort((a, b) =>
-      //   // Turn your strings into dates, and then subtract them
-      //   // to get a value that is either negative, positive, or zero.
-      //   new Date(a[2]) - new Date(b[2]));
-
       for (let k = 0; k < apptData.length; k += 1) {
         apptData[k][2] = DateTime.fromISO(apptData[k][2]).toFormat('dd-MMM-yyyy');
       }
+
       return pool.query('SELECT id FROM appointments').then((apptIdResults) => {
-        // const apptIdArray = [];
         const apptIdList = apptIdResults.rows;
         for (let j = 0; j < apptIdList.length; j += 1) {
           apptData[j].push(apptIdList[j].id);
         }
-        // apptData.push(apptIdArray);
         const hospQuery = 'SELECT hospital_visits.id FROM patients INNER JOIN appointments ON patients.id = appointments.patient_id INNER JOIN hospital_visits ON hospital_visits.id = appointments.visit_id INNER JOIN departments ON appointments.department_id = departments.id INNER JOIN hospitals ON hospital_visits.hospital_id = hospitals.id';
         return pool.query(hospQuery).then((HospIdResults) => {
-          // const hospIdArray = [];
           const hospIdList = HospIdResults.rows;
           for (let k = 0; k < hospIdList.length; k += 1) {
             apptData[k].push(hospIdList[k].id);
@@ -194,48 +196,54 @@ export const homePagePatient = (req, res) => {
           // to get a value that is either negative, positive, or zero.
             new Date(a[2]) - new Date(b[2]));
 
-          sortMonthArray = [[], [], [], [], [], [], [], [], [], [], [], []];
-          for (let m = 0; m < apptData.length; m += 1) {
-            const date = apptData[m][2];
+          // Get list of unique months
+          const monthsObj = {};
+          const monthsTempArr = [];
+          for (let i = 0; i < apptData.length; i += 1) {
+            const date = apptData[i][2];
             const month = date.split('-')[1];
-            if (month === 'Jan') {
-              sortMonthArray[0].push(apptData[m]);
-            }
-            if (month === 'Feb') {
-              sortMonthArray[1].push(apptData[m]);
-            }
-            if (month === 'Mar') {
-              sortMonthArray[2].push(apptData[m]);
-            }
-            if (month === 'Apr') {
-              sortMonthArray[3].push(apptData[m]);
-            }
-            if (month === 'May') {
-              sortMonthArray[4].push(apptData[m]);
-            }
-            if (month === 'Jun') {
-              sortMonthArray[5].push(apptData[m]);
-            }
-            if (month === 'Jul') {
-              sortMonthArray[6].push(apptData[m]);
-            }
-            if (month === 'Aug') {
-              sortMonthArray[7].push(apptData[m]);
-            }
-            if (month === 'Sep') {
-              sortMonthArray[8].push(apptData[m]);
-            }
-            if (month === 'Oct') {
-              sortMonthArray[9].push(apptData[m]);
-            }
-            if (month === 'Nov') {
-              sortMonthArray[10].push(apptData[m]);
-            }
-            if (month === 'Dec') {
-              sortMonthArray[11].push(apptData[m]);
+            if (!(month in monthsObj)) {
+              monthsTempArr.push(month);
+              // eslint-disable-next-line dot-notation
+              monthsObj[monthsTempArr[monthsTempArr.length - 1]] = month;
             }
           }
-          res.render('home-patient', { sortMonthArray });
+
+          const monthsArray = Object.values(monthsObj);
+
+          // Filter by patients based on user's choice
+          if (Object.keys(req.query)[0] === 'filter-patient') {
+            console.log('filter working');
+            const filteredName = req.query['filter-patient'];
+            apptData = apptData.filter((element) => element[0] === filteredName);
+            console.log(apptData);
+          }
+
+          // Filter by hospitals based on user's choice
+          if (Object.keys(req.query)[0] === 'filter-hospital') {
+            console.log('filter working');
+            const filteredHospital = req.query['filter-hospital'];
+            apptData = apptData.filter((element) => element[3] === filteredHospital);
+            console.log(apptData);
+          }
+
+          const sortNameArray = [];
+          for (let j = 0; j < nameArray.length; j += 1) {
+            sortNameArray.push([]);
+          }
+
+          for (let m = 0; m < apptData.length; m += 1) {
+            const name = apptData[m][0];
+            for (let j = 0; j < nameArray.length; j += 1) {
+              if (name === nameArray[j]) {
+                sortNameArray[j].push(apptData[m]);
+              }
+            }
+          }
+          sortNameArray.push(nameArray);
+          sortNameArray.push(hospitalArray);
+          sortNameArray.push(monthsArray);
+          res.render('home-patient', { sortNameArray });
         });
       });
     });

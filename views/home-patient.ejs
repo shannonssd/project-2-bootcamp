@@ -1,599 +1,114 @@
 
   <%- include('nav', { link: "home-patient-style.css" }); %>
   <body>
-    <div class="sort-container">
-
+   <div class="sort-container">
       <div class="sort">
-        <form action="/patient" name="sort">
+        <form action="/" name="sort">
           <select name="sort" id="sort" class="sort" onchange="`${sortAppts()}`">
-            <option value="patient" disabled selected> Patient </option>
-            <option value="date"> Date  </option>
-            <option value="" disabled selected>Sort Appts</option>
+            <option value="date"> Date </option>
+            <option value="patient" disabled selected> Patient  </option>
+            <option value="" disabled selected>Sort By</option>
+          </select>
+        </form>
+      </div>
+      <div class="filter-month">
+        <form action="/patient" name="filterMonthForm"  >
+          <label for="filter-month" > </label>
+          <select name="filter-month" id="filter-month" class="filter-month" onchange="`${submitMonthFilterForm()}`">
+            <option value="" disabled selected>Filter By Month</option>
+            <% sortNameArray[sortNameArray.length-1].forEach( (element) => { %>
+            <option value="<%= element %>"><%= element %></option>
+            <% }); %>
+          </select>
+        </form>
+      </div>
+
+       <div class="filter-hospital">
+        <form action="/patient" name="filterHospitalForm"  >
+          <label for="filter-hospital" > </label>
+          <select name="filter-hospital" id="filter-hospital" class="filter-hospital" onchange="`${submitHospitalFilterForm()}`">
+            <option value="" disabled selected>Filter By Hospital</option>
+            <% sortNameArray[sortNameArray.length-2].forEach( (element) => { %>
+            <option value="<%= element %>"><%= element %></option>
+            <% }); %>
           </select>
         </form>
       </div>
     </div>
+
     <div class="table">
-
-      <div class="january">January <span><button onclick="`${january()}`">↕</button></span>
-        <table class="january-table">
-          <tr>
-            <th>Patient</th>
-            <th>Relationship</th>
-            <th>Date</th>
-            <th>Hospital</th>
-            <th>Department</th>
-            <th>Time</th>
-            <th>Edit</th>
-            <th>Delete</th>
-          </tr>
-          <% for(let i = 0; i< sortMonthArray[0].length; i +=1){ %>
-          <tr>
-            <% for(let j = 0; j< 6; j +=1){ %>
-            <th><%= sortMonthArray[0][i][j] %></th>
+      <% for (let m = 0; m < sortNameArray[sortNameArray.length-3].length; m +=1){ %>
+        <div class="name"> <%= sortNameArray[sortNameArray.length-3][m] %>
+          <span><button onclick="`${nameTableDisplay()}`"> ↕</button></span>
+          <table class="name-table">
+            <tr>
+              <th>Patient</th>
+              <th>Relationship</th>
+              <th>Date</th>
+              <th>Hospital</th>
+              <th>Department</th>
+              <th>Time</th>
+              <th>Edit</th>
+              <th>Delete</th>
+            </tr>
+            <% for (let i = 0; i< sortNameArray[m].length; i +=1){ %>
+              <tr>
+                <% for (let j = 0; j< 6; j +=1){ %>
+                <th><%= sortNameArray[m][i][j] %></th>
+                <% } %>
+                
+                <th>
+                  <form action="/edit-appt">
+                    <label for="submit"></label>
+                    <input
+                      type="submit"
+                      id="submit"
+                      name="<%= `${[`${sortNameArray[m][i][6]}`, `${sortNameArray[m][i][7]}` ]}` %>"
+                      value="📝"
+                      onclick="return confirm('You can only change the date and time.');"
+                    />
+                  </form>
+                </th>
+                <th>
+                  <form action="/delete-appt">
+                    <label for="submit"></label>
+                    <input
+                      type="submit"
+                      id="submit"
+                      name="<%= sortNameArray[m][i][6] %>"
+                      value="❌"
+                      onclick="return confirm('Are you sure you want to delete this appointment?');"
+                    />
+                  </form>
+                </th>
+              </tr>
             <% } %>
-            
-            <th>
-              <form action="/edit-appt">
-                <label for="submit"></label>
-                <input
-                  type="submit"
-                  id="submit"
-                  name="<%= `${[`${sortMonthArray[0][i][6]}`, `${sortMonthArray[0][i][7]}` ]}` %>"
-                  value="📝"
-                  onclick="return confirm('You can only change the date and time.');"
-                />
-              </form>
-            </th>
-            <th>
-              <form action="/delete-appt">
-                <label for="submit"></label>
-                <input
-                  type="submit"
-                  id="submit"
-                  name="<%= sortMonthArray[0][i][6] %>"
-                  value="❌"
-                  onclick="return confirm('Are you sure you want to delete this appointment?');"
-                />
-              </form>
-            </th>
-          </tr>
-          <% } %>
-        </table>
-      </div>
-
-      <div class="february">February
-        <table>
-          <tr>
-            <th>Patient</th>
-            <th>Relationship</th>
-            <th>Date</th>
-            <th>Hospital</th>
-            <th>Department</th>
-            <th>Time</th>
-            <th>Edit</th>
-            <th>Delete</th>
-          </tr>
-          <% for(let i = 0; i< sortMonthArray[1].length; i +=1){ %>
-          <tr>
-            <% for(let j = 0; j< 6; j +=1){ %>
-            <th><%= sortMonthArray[1][i][j] %></th>
-            <% } %>
-            
-            <th>
-              <form action="/edit-appt">
-                <label for="submit"></label>
-                <input
-                  type="submit"
-                  id="submit"
-                  name="<%= `${[`${sortMonthArray[1][i][6]}`, `${sortMonthArray[1][i][7]}` ]}` %>"
-                  value="📝"
-                  onclick="return confirm('You can only change the date and time.');"
-                />
-              </form>
-            </th>
-            <th>
-              <form action="/delete-appt">
-                <label for="submit"></label>
-                <input
-                  type="submit"
-                  id="submit"
-                  name="<%= sortMonthArray[1][i][6] %>"
-                  value="❌"
-                  onclick="return confirm('Are you sure you want to delete this appointment?');"
-                />
-              </form>
-            </th>
-          </tr>
-          <% } %>
-        </table>
-      </div>
-
-      <div class="march">March
-        <table>
-          <tr>
-            <th>Patient</th>
-            <th>Relationship</th>
-            <th>Date</th>
-            <th>Hospital</th>
-            <th>Department</th>
-            <th>Time</th>
-            <th>Edit</th>
-            <th>Delete</th>
-          </tr>
-          <% for(let i = 0; i< sortMonthArray[2].length; i +=1){ %>
-          <tr>
-            <% for(let j = 0; j< 6; j +=1){ %>
-            <th><%= sortMonthArray[2][i][j] %></th>
-            <% } %>
-            
-            <th>
-              <form action="/edit-appt">
-                <label for="submit"></label>
-                <input
-                  type="submit"
-                  id="submit"
-                  name="<%= `${[`${sortMonthArray[2][i][6]}`, `${sortMonthArray[2][i][7]}` ]}` %>"
-                  value="📝"
-                  onclick="return confirm('You can only change the date and time.');"
-                />
-              </form>
-            </th>
-            <th>
-              <form action="/delete-appt">
-                <label for="submit"></label>
-                <input
-                  type="submit"
-                  id="submit"
-                  name="<%= sortMonthArray[2][i][6] %>"
-                  value="❌"
-                  onclick="return confirm('Are you sure you want to delete this appointment?');"
-                />
-              </form>
-            </th>
-          </tr>
-          <% } %>
-        </table>
-      </div>
-
-      <div class="april">April
-        <table>
-          <tr>
-            <th>Patient</th>
-            <th>Relationship</th>
-            <th>Date</th>
-            <th>Hospital</th>
-            <th>Department</th>
-            <th>Time</th>
-            <th>Edit</th>
-            <th>Delete</th>
-          </tr>
-          <% for(let i = 0; i< sortMonthArray[3].length; i +=1){ %>
-          <tr>
-            <% for(let j = 0; j< 6; j +=1){ %>
-            <th><%= sortMonthArray[3][i][j] %></th>
-            <% } %>
-            
-            <th>
-              <form action="/edit-appt">
-                <label for="submit"></label>
-                <input
-                  type="submit"
-                  id="submit"
-                  name="<%= `${[`${sortMonthArray[3][i][6]}`, `${sortMonthArray[3][i][7]}` ]}` %>"
-                  value="📝"
-                  onclick="return confirm('You can only change the date and time.');"
-                />
-              </form>
-            </th>
-            <th>
-              <form action="/delete-appt">
-                <label for="submit"></label>
-                <input
-                  type="submit"
-                  id="submit"
-                  name="<%= sortMonthArray[3][i][6] %>"
-                  value="❌"
-                  onclick="return confirm('Are you sure you want to delete this appointment?');"
-                />
-              </form>
-            </th>
-          </tr>
-          <% } %>
-        </table>
-      </div>
-
-      <div class="may">May
-        <table>
-          <tr>
-            <th>Patient</th>
-            <th>Relationship</th>
-            <th>Date</th>
-            <th>Hospital</th>
-            <th>Department</th>
-            <th>Time</th>
-            <th>Edit</th>
-            <th>Delete</th>
-          </tr>
-          <% for(let i = 0; i< sortMonthArray[4].length; i +=1){ %>
-          <tr>
-            <% for(let j = 0; j< 6; j +=1){ %>
-            <th><%= sortMonthArray[4][i][j] %></th>
-            <% } %>
-            
-            <th>
-              <form action="/edit-appt">
-                <label for="submit"></label>
-                <input
-                  type="submit"
-                  id="submit"
-                  name="<%= `${[`${sortMonthArray[4][i][6]}`, `${sortMonthArray[4][i][7]}` ]}` %>"
-                  value="📝"
-                  onclick="return confirm('You can only change the date and time.');"
-                />
-              </form>
-            </th>
-            <th>
-              <form action="/delete-appt">
-                <label for="submit"></label>
-                <input
-                  type="submit"
-                  id="submit"
-                  name="<%= sortMonthArray[4][i][6] %>"
-                  value="❌"
-                  onclick="return confirm('Are you sure you want to delete this appointment?');"
-                />
-              </form>
-            </th>
-          </tr>
-          <% } %>
-        </table>
-      </div>
-
-      <div class="june">June
-        <table>
-          <tr>
-            <th>Patient</th>
-            <th>Relationship</th>
-            <th>Date</th>
-            <th>Hospital</th>
-            <th>Department</th>
-            <th>Time</th>
-            <th>Edit</th>
-            <th>Delete</th>
-          </tr>
-          <% for(let i = 0; i< sortMonthArray[5].length; i +=1){ %>
-          <tr>
-            <% for(let j = 0; j< 6; j +=1){ %>
-            <th><%= sortMonthArray[5][i][j] %></th>
-            <% } %>
-            
-            <th>
-              <form action="/edit-appt">
-                <label for="submit"></label>
-                <input
-                  type="submit"
-                  id="submit"
-                  name="<%= `${[`${sortMonthArray[5][i][6]}`, `${sortMonthArray[5][i][7]}` ]}` %>"
-                  value="📝"
-                  onclick="return confirm('You can only change the date and time.');"
-                />
-              </form>
-            </th>
-            <th>
-              <form action="/delete-appt">
-                <label for="submit"></label>
-                <input
-                  type="submit"
-                  id="submit"
-                  name="<%= sortMonthArray[5][i][6] %>"
-                  value="❌"
-                  onclick="return confirm('Are you sure you want to delete this appointment?');"
-                />
-              </form>
-            </th>
-          </tr>
-          <% } %>
-        </table>
-      </div>
-
-      <div class="july">July
-        <table>
-          <tr>
-            <th>Patient</th>
-            <th>Relationship</th>
-            <th>Date</th>
-            <th>Hospital</th>
-            <th>Department</th>
-            <th>Time</th>
-            <th>Edit</th>
-            <th>Delete</th>
-          </tr>
-          <% for(let i = 0; i< sortMonthArray[6].length; i +=1){ %>
-          <tr>
-            <% for(let j = 0; j< 6; j +=1){ %>
-            <th><%= sortMonthArray[6][i][j] %></th>
-            <% } %>
-            
-            <th>
-              <form action="/edit-appt">
-                <label for="submit"></label>
-                <input
-                  type="submit"
-                  id="submit"
-                  name="<%= `${[`${sortMonthArray[6][i][6]}`, `${sortMonthArray[6][i][7]}` ]}` %>"
-                  value="📝"
-                  onclick="return confirm('You can only change the date and time.');"
-                />
-              </form>
-            </th>
-            <th>
-              <form action="/delete-appt">
-                <label for="submit"></label>
-                <input
-                  type="submit"
-                  id="submit"
-                  name="<%= sortMonthArray[6][i][6] %>"
-                  value="❌"
-                  onclick="return confirm('Are you sure you want to delete this appointment?');"
-                />
-              </form>
-            </th>
-          </tr>
-          <% } %>
-        </table>
-      </div>
-
-      <div class="august">August
-        <table>
-          <tr>
-            <th>Patient</th>
-            <th>Relationship</th>
-            <th>Date</th>
-            <th>Hospital</th>
-            <th>Department</th>
-            <th>Time</th>
-            <th>Edit</th>
-            <th>Delete</th>
-          </tr>
-          <% for(let i = 0; i< sortMonthArray[7].length; i +=1){ %>
-          <tr>
-            <% for(let j = 0; j< 6; j +=1){ %>
-            <th><%= sortMonthArray[7][i][j] %></th>
-            <% } %>
-            
-            <th>
-              <form action="/edit-appt">
-                <label for="submit"></label>
-                <input
-                  type="submit"
-                  id="submit"
-                  name="<%= `${[`${sortMonthArray[7][i][6]}`, `${sortMonthArray[7][i][7]}` ]}` %>"
-                  value="📝"
-                  onclick="return confirm('You can only change the date and time.');"
-                />
-              </form>
-            </th>
-            <th>
-              <form action="/delete-appt">
-                <label for="submit"></label>
-                <input
-                  type="submit"
-                  id="submit"
-                  name="<%= sortMonthArray[7][i][6] %>"
-                  value="❌"
-                  onclick="return confirm('Are you sure you want to delete this appointment?');"
-                />
-              </form>
-            </th>
-          </tr>
-          <% } %>
-        </table>
-      </div>
-
-      <div class="september">September
-        <table>
-          <tr>
-            <th>Patient</th>
-            <th>Relationship</th>
-            <th>Date</th>
-            <th>Hospital</th>
-            <th>Department</th>
-            <th>Time</th>
-            <th>Edit</th>
-            <th>Delete</th>
-          </tr>
-          <% for(let i = 0; i< sortMonthArray[8].length; i +=1){ %>
-          <tr>
-            <% for(let j = 0; j< 6; j +=1){ %>
-            <th><%= sortMonthArray[8][i][j] %></th>
-            <% } %>
-            
-            <th>
-              <form action="/edit-appt">
-                <label for="submit"></label>
-                <input
-                  type="submit"
-                  id="submit"
-                  name="<%= `${[`${sortMonthArray[8][i][6]}`, `${sortMonthArray[8][i][7]}` ]}` %>"
-                  value="📝"
-                  onclick="return confirm('You can only change the date and time.');"
-                />
-              </form>
-            </th>
-            <th>
-              <form action="/delete-appt">
-                <label for="submit"></label>
-                <input
-                  type="submit"
-                  id="submit"
-                  name="<%= sortMonthArray[8][i][6] %>"
-                  value="❌"
-                  onclick="return confirm('Are you sure you want to delete this appointment?');"
-                />
-              </form>
-            </th>
-          </tr>
-          <% } %>
-        </table>
-      </div>
-
-      <div class="october">October
-        <table>
-          <tr>
-            <th>Patient</th>
-            <th>Relationship</th>
-            <th>Date</th>
-            <th>Hospital</th>
-            <th>Department</th>
-            <th>Time</th>
-            <th>Edit</th>
-            <th>Delete</th>
-          </tr>
-          <% for(let i = 0; i< sortMonthArray[9].length; i +=1){ %>
-          <tr>
-            <% for(let j = 0; j< 6; j +=1){ %>
-            <th><%= sortMonthArray[9][i][j] %></th>
-            <% } %>
-            
-            <th>
-              <form action="/edit-appt">
-                <label for="submit"></label>
-                <input
-                  type="submit"
-                  id="submit"
-                  name="<%= `${[`${sortMonthArray[9][i][6]}`, `${sortMonthArray[9][i][7]}` ]}` %>"
-                  value="📝"
-                  onclick="return confirm('You can only change the date and time.');"
-                />
-              </form>
-            </th>
-            <th>
-              <form action="/delete-appt">
-                <label for="submit"></label>
-                <input
-                  type="submit"
-                  id="submit"
-                  name="<%= sortMonthArray[9][i][6] %>"
-                  value="❌"
-                  onclick="return confirm('Are you sure you want to delete this appointment?');"
-                />
-              </form>
-            </th>
-          </tr>
-          <% } %>
-        </table>
-      </div>
-
-      <div class="november">November
-        <table>
-          <tr>
-            <th>Patient</th>
-            <th>Relationship</th>
-            <th>Date</th>
-            <th>Hospital</th>
-            <th>Department</th>
-            <th>Time</th>
-            <th>Edit</th>
-            <th>Delete</th>
-          </tr>
-          <% for(let i = 0; i< sortMonthArray[10].length; i +=1){ %>
-          <tr>
-            <% for(let j = 0; j< 6; j +=1){ %>
-            <th><%= sortMonthArray[10][i][j] %></th>
-            <% } %>
-            
-            <th>
-              <form action="/edit-appt">
-                <label for="submit"></label>
-                <input
-                  type="submit"
-                  id="submit"
-                  name="<%= `${[`${sortMonthArray[10][i][6]}`, `${sortMonthArray[10][i][7]}` ]}` %>"
-                  value="📝"
-                  onclick="return confirm('You can only change the date and time.');"
-                />
-              </form>
-            </th>
-            <th>
-              <form action="/delete-appt">
-                <label for="submit"></label>
-                <input
-                  type="submit"
-                  id="submit"
-                  name="<%= sortMonthArray[10][i][6] %>"
-                  value="❌"
-                  onclick="return confirm('Are you sure you want to delete this appointment?');"
-                />
-              </form>
-            </th>
-          </tr>
-          <% } %>
-        </table>
-      </div>
-    
-      <div class="december">December
-        <table>
-          <tr>
-            <th>Patient</th>
-            <th>Relationship</th>
-            <th>Date</th>
-            <th>Hospital</th>
-            <th>Department</th>
-            <th>Time</th>
-            <th>Edit</th>
-            <th>Delete</th>
-          </tr>
-          <% for(let i = 0; i< sortMonthArray[11].length; i +=1){ %>
-          <tr>
-            <% for(let j = 0; j< 6; j +=1){ %>
-            <th><%= sortMonthArray[11][i][j] %></th>
-            <% } %>
-            
-            <th>
-              <form action="/edit-appt">
-                <label for="submit"></label>
-                <input
-                  type="submit"
-                  id="submit"
-                  name="<%= `${[`${sortMonthArray[11][i][6]}`, `${sortMonthArray[11][i][7]}` ]}` %>"
-                  value="📝"
-                  onclick="return confirm('You can only change the date and time.');"
-                />
-              </form>
-            </th>
-            <th>
-              <form action="/delete-appt">
-                <label for="submit"></label>
-                <input
-                  type="submit"
-                  id="submit"
-                  name="<%= sortMonthArray[11][i][6] %>"
-                  value="❌"
-                  onclick="return confirm('Are you sure you want to delete this appointment?');"
-                />
-              </form>
-            </th>
-          </tr>
-          <% } %>
-        </table>
-      </div>
-
+          </table>
+        </div>
+      <% } %>
     </div>
+    
     <script>
-
-      
       function sortAppts () {
         console.log('working')
         window.location.href = '/';
       }
 
-      function january () {
-        var januaryDisplay = document.querySelector('.january-table');
-        if (januaryDisplay.style.display === "block") {
-        januaryDisplay.style.display = "none";
+      function submitMonthFilterForm()
+      { 
+        document.filterMonthForm.submit();
+      };
+      function submitHospitalFilterForm()
+      { 
+        document.filterHospitalForm.submit();
+      };
+      
+      function nameTableDisplay () {
+        var nameTable = document.querySelector('.name-table');
+        if (nameTable.style.display === "none") {
+        nameTable.style.display = "block";
         } else {
-          januaryDisplay.style.display = "block";
+          nameTable.style.display = "none";
         }
       }
 
