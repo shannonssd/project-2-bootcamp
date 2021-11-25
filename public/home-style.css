@@ -1,6 +1,29 @@
+body {
+  margin-top: 50px;
+}
+
 .table {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 400px;
+  flex-direction: column;
+}
+
+.january,
+.february,
+.march,
+.april,
+.may,
+.june,
+.july,
+.august,
+.september,
+.october,
+.november,
+.december {
+  padding: 15px;
+}
+
+.january-table {
+  display: none;
 }

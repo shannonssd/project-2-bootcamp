@@ -34,6 +34,8 @@ export const homePage = (req, res) => {
     const getApptsQuery = 'SELECT patients.name, patients.relationship, hospital_visits.date, hospitals.name AS hospital, departments.name as department, appointments.time FROM patients INNER JOIN appointments ON patients.id = appointments.patient_id INNER JOIN hospital_visits ON hospital_visits.id = appointments.visit_id INNER JOIN departments ON appointments.department_id = departments.id INNER JOIN hospitals ON hospital_visits.hospital_id = hospitals.id';
 
     pool.query(getApptsQuery).then((apptsResult) => {
+      let sortMonthArray = [[], [], [], [], [], [], [], [], [], [], [], []];
+
       const apptData = [];
       const apptArray = apptsResult.rows;
       for (let i = 0; i < apptArray.length; i += 1) {
@@ -59,18 +61,59 @@ export const homePage = (req, res) => {
         return pool.query(hospQuery).then((HospIdResults) => {
           // const hospIdArray = [];
           const hospIdList = HospIdResults.rows;
-          for (let j = 0; j < hospIdList.length; j += 1) {
-            apptData[j].push(hospIdList[j].id);
+          for (let k = 0; k < hospIdList.length; k += 1) {
+            apptData[k].push(hospIdList[k].id);
           }
-
           apptData.sort((a, b) =>
           // Turn your strings into dates, and then subtract them
           // to get a value that is either negative, positive, or zero.
             new Date(a[2]) - new Date(b[2]));
 
+          sortMonthArray = [[], [], [], [], [], [], [], [], [], [], [], []];
+          for (let m = 0; m < apptData.length; m += 1) {
+            const date = apptData[m][2];
+            const month = date.split('-')[1];
+            if (month === 'Jan') {
+              sortMonthArray[0].push(apptData[m]);
+            }
+            if (month === 'Feb') {
+              sortMonthArray[1].push(apptData[m]);
+            }
+            if (month === 'Mar') {
+              sortMonthArray[2].push(apptData[m]);
+            }
+            if (month === 'Apr') {
+              sortMonthArray[3].push(apptData[m]);
+            }
+            if (month === 'May') {
+              sortMonthArray[4].push(apptData[m]);
+            }
+            if (month === 'Jun') {
+              sortMonthArray[5].push(apptData[m]);
+            }
+            if (month === 'Jul') {
+              sortMonthArray[6].push(apptData[m]);
+            }
+            if (month === 'Aug') {
+              sortMonthArray[7].push(apptData[m]);
+            }
+            if (month === 'Sep') {
+              sortMonthArray[8].push(apptData[m]);
+            }
+            if (month === 'Oct') {
+              sortMonthArray[9].push(apptData[m]);
+            }
+            if (month === 'Nov') {
+              sortMonthArray[10].push(apptData[m]);
+            }
+            if (month === 'Dec') {
+              sortMonthArray[11].push(apptData[m]);
+            }
+          }
+
           console.log(apptData);
           // apptData.push(hospIdArray);
-          res.render('home', { apptData });
+          res.render('home', { sortMonthArray });
         });
       });
     });
