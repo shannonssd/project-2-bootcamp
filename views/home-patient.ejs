@@ -1,41 +1,17 @@
 
-  <%- include('nav', { link: "home-style.css" }); %>
+  <%- include('nav', { link: "home-patient-style.css" }); %>
   <body>
     <div class="sort-container">
 
       <div class="sort">
         <form action="/patient" name="sort">
           <select name="sort" id="sort" class="sort" onchange="`${sortAppts()}`">
-            <option value="date" disabled selected> Date  </option>
-            <option value="" disabled selected>Sort By</option>
-            <option value="patient"> Patient </option>
+            <option value="patient" disabled selected> Patient </option>
+            <option value="date"> Date  </option>
+            <option value="" disabled selected>Sort Appts</option>
           </select>
         </form>
       </div>
-      <div class="filter-patient">
-        <form action="/" name="filterPatientForm"  >
-          <label for="filter-patient" > </label>
-          <select name="filter-patient" id="filter-patient" class="filter-patient" onchange="`${submitPatientFilterForm()}`">
-              <option value="" disabled selected>Filter By Patient</option>
-              <% sortMonthArray[12].forEach( (element) => { %>
-              <option value="<%= element %>"><%= element %></option>
-              <% }); %>
-            </select>
-        </form>
-      </div>
-
-       <div class="filter-hospital">
-        <form action="/" name="filterHospitalForm"  >
-          <label for="filter-hospital" > </label>
-          <select name="filter-hospital" id="filter-hospital" class="filter-hospital" onchange="`${submitHospitalFilterForm()}`">
-              <option value="" disabled selected>Filter By Hospital</option>
-              <% sortMonthArray[13].forEach( (element) => { %>
-              <option value="<%= element %>"><%= element %></option>
-              <% }); %>
-            </select>
-        </form>
-      </div>
-
     </div>
     <div class="table">
 
@@ -608,18 +584,9 @@
 
       
       function sortAppts () {
-        window.location.href = '/patient';
+        console.log('working')
+        window.location.href = '/';
       }
-      function submitPatientFilterForm()
-      { 
-        document.filterPatientForm.submit();
-      };
-      function submitHospitalFilterForm()
-      { 
-        document.filterHospitalForm.submit();
-      };
-      
-      
 
       function january () {
         var januaryDisplay = document.querySelector('.january-table');
