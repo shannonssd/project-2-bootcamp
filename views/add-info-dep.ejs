@@ -1,0 +1,23 @@
+  <%- include('nav', { link: "add-info-dep.css" }); %>
+
+  <body>
+    <div class="main">
+      <span><a href="/add-info">New Patient</a></span>
+     <span><a href="/add-info/hospital">New Hospital</a></span>
+     <span><a href="/add-info/department">New Department</a></span><br /><br />
+      <form action="/add-info/department" method="POST">
+        
+        <label for="new-department">New Department:</label><br />
+        <input
+          type="text"
+          id="new-department"
+          name="new-department"
+          placeholder="New Department"
+          required
+        /><br /><br />
+        
+        <input type="submit" submit />
+      </form>
+    </div>
+  </body>
+</html>

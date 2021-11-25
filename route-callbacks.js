@@ -81,8 +81,6 @@ export const newInfo = (req, res) => {
     newInfoArray = [];
     const newPatient = req.body['new-patient'];
     const { relationship } = req.body;
-    const newHospital = req.body['new-hospital'];
-    const newDepartment = req.body['new-department'];
 
     if (newPatient !== '') {
       const patientArray = [newPatient, relationship];
@@ -92,24 +90,8 @@ export const newInfo = (req, res) => {
         newInfoArray.push({ 'Relationship to User': `${patientResult.rows[0].relationship}` });
       });
     }
-    if (newHospital !== '') {
-      const hospitalArray = [newHospital];
-      const hospitalQuery = 'INSERT INTO hospitals (name) VALUES ($1) RETURNING *';
-      pool.query(hospitalQuery, hospitalArray).then((hospitalResult) => {
-        newInfoArray.push({ 'New Hospital': `${hospitalResult.rows[0].name}` });
-      });
-    }
-    if (newDepartment !== '') {
-      const departmentArray = [newDepartment];
-      const departmentQuery = 'INSERT INTO departments (name) VALUES ($1) RETURNING *';
-      pool.query(departmentQuery, departmentArray).then((departmentResult) => {
-        newInfoArray.push({ 'New Department': `${departmentResult.rows[0].name}` });
-      });
-    }
+
     res.redirect('/add-info-new');
-    // else {
-    //   res.redirect('/add-info-new');
-    // }
   }
 };
 
@@ -118,6 +100,80 @@ export const newInfoDisplay = (req, res) => {
     res.redirect('/main');
   } else {
     res.render('add-info-new', { newInfoArray });
+  }
+};
+
+export const newInfoFormHos = (req, res) => {
+  if (req.isUserLoggedIn === false) {
+    res.redirect('/main');
+  } else {
+    res.render('add-info-hos');
+  }
+};
+
+let newInfoArrayHos = [];
+export const newInfoHos = (req, res) => {
+  if (req.isUserLoggedIn === false) {
+    res.redirect('/main');
+  } else {
+    newInfoArrayHos = [];
+
+    const newHospital = req.body['new-hospital'];
+
+    if (newHospital !== '') {
+      const hospitalArray = [newHospital];
+      const hospitalQuery = 'INSERT INTO hospitals (name) VALUES ($1) RETURNING *';
+      pool.query(hospitalQuery, hospitalArray).then((hospitalResult) => {
+        newInfoArrayHos.push({ 'New Hospital': `${hospitalResult.rows[0].name}` });
+      });
+    }
+
+    res.redirect('/add-info-new/hospital');
+  }
+};
+
+export const newInfoDisplayHos = (req, res) => {
+  if (req.isUserLoggedIn === false) {
+    res.redirect('/main');
+  } else {
+    res.render('add-info-new-hos', { newInfoArrayHos });
+  }
+};
+
+export const newInfoFormDep = (req, res) => {
+  if (req.isUserLoggedIn === false) {
+    res.redirect('/main');
+  } else {
+    res.render('add-info-dep');
+  }
+};
+
+let newInfoArrayDep = [];
+export const newInfoDep = (req, res) => {
+  if (req.isUserLoggedIn === false) {
+    res.redirect('/main');
+  } else {
+    newInfoArrayDep = [];
+
+    const newDepartment = req.body['new-department'];
+
+    if (newDepartment !== '') {
+      const departmentArray = [newDepartment];
+      const departmentQuery = 'INSERT INTO departments (name) VALUES ($1) RETURNING *';
+      pool.query(departmentQuery, departmentArray).then((departmentResult) => {
+        newInfoArray.push({ 'New Department': `${departmentResult.rows[0].name}` });
+      });
+    }
+
+    res.redirect('/add-info-new/department');
+  }
+};
+
+export const newInfoDisplayDep = (req, res) => {
+  if (req.isUserLoggedIn === false) {
+    res.redirect('/main');
+  } else {
+    res.render('add-info-new-dep', { newInfoArrayDep });
   }
 };
 

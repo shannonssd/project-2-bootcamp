@@ -7,7 +7,7 @@ import {
 } from './account-route-callbacks.js';
 import {
   // eslint-disable-next-line max-len
-  mainPage, homePage, newInfoForm, newInfo, newInfoDisplay, addApptForm, addAppt, editApptForm, editAppt, deleteAppt,
+  mainPage, homePage, newInfoForm, newInfo, newInfoDisplay, newInfoFormHos, newInfoHos, newInfoDisplayHos, newInfoFormDep, newInfoDep, newInfoDisplayDep, addApptForm, addAppt, editApptForm, editAppt, deleteAppt,
 } from './route-callbacks.js';
 
 const PORT = process.argv[2];
@@ -34,13 +34,18 @@ app.get('/logout', logout);
 // #################### Routes
 app.get('/main', mainPage);
 app.get('/', homePage);
+// New patient forms
 app.get('/add-info', newInfoForm);
 app.post('/add-info', newInfo);
 app.get('/add-info-new', newInfoDisplay);
-
-app.get('/add-info/hospital', newInfoForm);
-app.post('/add-info/hospital', newInfo);
-app.get('/add-info-new/hospital', newInfoDisplay);
+// New hospital forms
+app.get('/add-info/hospital', newInfoFormHos);
+app.post('/add-info/hospital', newInfoHos);
+app.get('/add-info-new/hospital', newInfoDisplayHos);
+// New department forms
+app.get('/add-info/department', newInfoFormDep);
+app.post('/add-info/department', newInfoDep);
+app.get('/add-info-new/department', newInfoDisplayDep);
 
 app.get('/add-appt', addApptForm);
 app.post('/add-appt', addAppt);
