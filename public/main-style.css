@@ -1,0 +1,58 @@
+body {
+  margin: 0;
+}
+
+.nav {
+  margin: 0;
+  background-color: black;
+  height: 64px;
+}
+
+.title {
+  font-size: 50px;
+  font-family: "Open Sans";
+  color: oldlace;
+  font-weight: bold;
+  padding-left: 25px;
+}
+
+.title-container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+.account {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  flex-direction: column;
+  padding-top: 7px;
+}
+
+.login {
+  display: flex;
+  justify-content: end;
+}
+
+.email {
+  width: 40%;
+}
+
+.password {
+  width: 39%;
+}
+
+.signup {
+  display: flex;
+  justify-content: end;
+  padding-right: 14px;
+}
+
+.sign-up-link {
+  color: white;
+  font-family: "Open Sans";
+  font-weight: bold;
+}
+
+.slideshow {
+}

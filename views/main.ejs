@@ -4,7 +4,51 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <link rel="stylesheet" href="/main-style.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap"
+      rel="stylesheet"
+    />
+     <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+     <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap"
+      rel="stylesheet"
+    />
   </head>
-  <body></body>
+  <body>
+   <div class="row nav">
+     <div class="col-6 title-container">
+      <div class=" title">ATHAZ</div>
+     </div>
+     <div class="col-6 account">
+       <div class="login">
+         <form action="/main" method="POST">
+          <label for="email"></label>
+          <input type="text" id="email" name="email" placeholder="Email" class="email" required />
+          <label for="password"></label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Password"
+            class="password"
+            required
+          />
+          <input type="submit" value="Sign In" />
+         </form>
+       </div>
+       <div class="signup">
+        <a href="/signup" class="sign-up-link">Create New Account</a>
+       </div>
+      </div>
+   </div>
+   <div class="slideshow">
+     
+   </div>
+  </body>
 </html>

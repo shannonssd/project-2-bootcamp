@@ -42,7 +42,7 @@ export const signUpFormResults = (req, res) => {
 
 // Login
 export const loginForm = (req, res) => {
-  res.render('login');
+  res.render('main');
 };
 
 export const loginFormResults = (req, res) => {
@@ -73,6 +73,5 @@ export const loginFormResults = (req, res) => {
 export const logout = (req, res) => {
   res.clearCookie('loggedInHash');
   res.clearCookie('userId');
-  // res.send('Logged out!');
   res.redirect('/main');
 };
