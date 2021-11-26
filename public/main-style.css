@@ -81,17 +81,15 @@ html {
   display: none;
   height: 100vh;
   width: 100%;
-  /* background-repeat: no-repeat;
-  background-size: cover; */
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 img {
   padding: 0;
   display: block;
   width: 100%;
   height: 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
+  object-fit: cover;
 }
 
 /* Slideshow container */
@@ -102,17 +100,6 @@ img {
   top: 0;
   bottom: 0;
   z-index: -1;
-}
-
-/* Caption text */
-.text {
-  color: #f2f2f2;
-  font-size: 15px;
-  padding: 8px 12px;
-  position: relative;
-  bottom: 400px;
-  width: 100%;
-  text-align: center;
 }
 
 /* The dots/bullets/indicators */
@@ -129,7 +116,7 @@ img {
 .dots {
   position: relative;
   bottom: 42px;
-  left: 660px;
+  left: 900px;
 }
 .active {
   background-color: #717171;
@@ -138,9 +125,9 @@ img {
 /* Fading animation */
 .fade {
   -webkit-animation-name: fade;
-  -webkit-animation-duration: 4s;
+  -webkit-animation-duration: 5s;
   animation-name: fade;
-  animation-duration: 4s;
+  animation-duration: 5s;
 }
 
 @-webkit-keyframes fade {
