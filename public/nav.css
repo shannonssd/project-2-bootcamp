@@ -24,7 +24,7 @@ body::-webkit-scrollbar-track {
 }
 
 body::-webkit-scrollbar-thumb {
-  background: #6649b8;
+  background: rgb(184, 127, 22);
 }
 
 main {
@@ -76,6 +76,9 @@ main {
 .link-text {
   display: none;
   margin-left: 1rem;
+  background: -webkit-linear-gradient(yellow, rgb(240, 78, 78));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .nav-link svg {
@@ -85,11 +88,11 @@ main {
 }
 
 .fa-primary {
-  color: #ff7eee;
+  color: orange;
 }
 
 .fa-secondary {
-  color: #df49a6;
+  color: rgb(255, 121, 5);
 }
 
 .fa-primary,
@@ -119,7 +122,10 @@ main {
   position: absolute;
   left: -999px;
   transition: var(--transition-speed);
-  color: grey;
+  background: -webkit-linear-gradient(yellow, red);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .navbar:hover .logo svg {
