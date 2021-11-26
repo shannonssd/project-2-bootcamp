@@ -519,6 +519,3 @@ export const deleteAppt = (req, res) => {
     });
   }
 };
-
-// 1. Filter sort
-// 2. Carousell tryout;

@@ -46,7 +46,3 @@ CREATE TABLE IF NOT EXISTS prescriptions (
   patient_id INTEGER,
   medication_id INTEGER
 );
-
--- SELECT patients.name, patients.relationship, hospital_visits.date, hospitals.name AS hospital, departments.name as department, appointments.time FROM patients INNER JOIN appointments ON patients.id = appointments.patient_id INNER JOIN hospital_visits ON hospital_visits.id = appointments.visit_id INNER JOIN departments ON appointments.department_id = departments.id INNER JOIN hospitals ON hospital_visits.hospital_id = hospitals.id;
-
--- SELECT prescriptions.id, patients.name AS patient_name, patients.relationship, medications.name AS medication_name, prescriptions.dosage FROM prescriptions INNER JOIN patients ON patients.id = prescriptions.patient_id INNER JOIN medications ON prescriptions.medication_id = medications.id;
