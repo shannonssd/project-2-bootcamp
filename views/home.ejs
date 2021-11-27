@@ -1,63 +1,71 @@
 
   <%- include('nav', { link: "home-style.css" }); %>
   <body>
-    <div class="sort-container">
+    <main>
 
-      <div class="sort">
-        <form action="/patient" name="sort">
-          <select name="sort" id="sort" class="sort" onchange="`${sortAppts()}`">
-            <option value="date" disabled selected> Date  </option>
-            <option value="" disabled selected>Sort By</option>
-            <option value="patient"> Patient </option>
-          </select>
-        </form>
-      </div>
-      <div class="filter-patient">
-        <form action="/" name="filterPatientForm"  >
-          <label for="filter-patient" > </label>
-          <select name="filter-patient" id="filter-patient" class="filter-patient" onchange="`${submitPatientFilterForm()}`">
-              <option value="" disabled selected>Filter By Patient</option>
-              <% sortMonthArray[12].forEach( (element) => { %>
-              <option value="<%= element %>"><%= element %></option>
-              <% }); %>
+      <div class="sort-container">
+
+        <div class="sort">
+          <form action="/patient" name="sort">
+            <select name="sort" id="sort" class="sort" onchange="`${sortAppts()}`">
+              <option value="date" disabled selected> Date  </option>
+              <option value="" disabled selected>Sort By</option>
+              <option value="patient"> Patient </option>
             </select>
-        </form>
+          </form>
+        </div>
+        <div class="filter-patient">
+          <form action="/" name="filterPatientForm"  >
+            <label for="filter-patient" > </label>
+            <select name="filter-patient" id="filter-patient" class="filter-patient" onchange="`${submitPatientFilterForm()}`">
+                <option value="" disabled selected>Filter By Patient</option>
+                <% sortMonthArray[12].forEach( (element) => { %>
+                <option value="<%= element %>"><%= element %></option>
+                <% }); %>
+              </select>
+          </form>
+        </div>
+
+        <div class="filter-hospital">
+          <form action="/" name="filterHospitalForm"  >
+            <label for="filter-hospital" > </label>
+            <select name="filter-hospital" id="filter-hospital" class="filter-hospital" onchange="`${submitHospitalFilterForm()}`">
+                <option value="" disabled selected>Filter By Hospital</option>
+                <% sortMonthArray[13].forEach( (element) => { %>
+                <option value="<%= element %>"><%= element %></option>
+                <% }); %>
+              </select>
+          </form>
+        </div>
+
       </div>
+      <div class="table">
 
-       <div class="filter-hospital">
-        <form action="/" name="filterHospitalForm"  >
-          <label for="filter-hospital" > </label>
-          <select name="filter-hospital" id="filter-hospital" class="filter-hospital" onchange="`${submitHospitalFilterForm()}`">
-              <option value="" disabled selected>Filter By Hospital</option>
-              <% sortMonthArray[13].forEach( (element) => { %>
-              <option value="<%= element %>"><%= element %></option>
-              <% }); %>
-            </select>
-        </form>
-      </div>
-
-    </div>
-    <div class="table">
-
-      <div class="january">January <span><button onclick="`${january()}`">↕</button></span>
+        
+        <div class="month-container"> 
+          <div class="january">January <button onclick="`${january()}`">↕</button>
+            <hr>
+          </div> 
+        </div> 
+        <div class="table-container">
         <table class="january-table">
           <tr>
-            <th>Patient</th>
-            <th>Relationship</th>
-            <th>Date</th>
-            <th>Hospital</th>
-            <th>Department</th>
-            <th>Time</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th class="table-header">Patient</th>
+            <th class="table-header">Relationship</th>
+            <th class="table-header">Date</th>
+            <th class="table-header">Hospital</th>
+            <th class="table-header">Department</th>
+            <th class="table-header">Time</th>
+            <th class="table-header">Edit</th>
+            <th class="table-header">Delete</th>
           </tr>
           <% for(let i = 0; i< sortMonthArray[0].length; i +=1){ %>
           <tr>
             <% for(let j = 0; j< 6; j +=1){ %>
-            <th><%= sortMonthArray[0][i][j] %></th>
+            <th class="table-content"><%= sortMonthArray[0][i][j] %></th>
             <% } %>
             
-            <th>
+            <th class="table-content">
               <form action="/edit-appt">
                 <label for="submit"></label>
                 <input
@@ -69,7 +77,7 @@
                 />
               </form>
             </th>
-            <th>
+            <th class="table-content">
               <form action="/delete-appt">
                 <label for="submit"></label>
                 <input
@@ -84,27 +92,35 @@
           </tr>
           <% } %>
         </table>
-      </div>
+        </div>
+        
 
-      <div class="february">February
-        <table>
+        
+
+        <div class="month-container"> 
+          <div class="february">February <button onclick="`${february()}`">↕</button>
+          <hr>
+          </div> 
+        </div> 
+        <div class="table-container">
+        <table class="february-table">
           <tr>
-            <th>Patient</th>
-            <th>Relationship</th>
-            <th>Date</th>
-            <th>Hospital</th>
-            <th>Department</th>
-            <th>Time</th>
-            <th>Edit</th>
-            <th>Delete</th>
+             <th class="table-header">Patient</th>
+            <th class="table-header">Relationship</th>
+            <th class="table-header">Date</th>
+            <th class="table-header">Hospital</th>
+            <th class="table-header">Department</th>
+            <th class="table-header">Time</th>
+            <th class="table-header">Edit</th>
+            <th class="table-header">Delete</th>
           </tr>
           <% for(let i = 0; i< sortMonthArray[1].length; i +=1){ %>
           <tr>
             <% for(let j = 0; j< 6; j +=1){ %>
-            <th><%= sortMonthArray[1][i][j] %></th>
+            <th class="table-content"><%= sortMonthArray[1][i][j] %></th>
             <% } %>
             
-            <th>
+            <th class="table-content">
               <form action="/edit-appt">
                 <label for="submit"></label>
                 <input
@@ -116,7 +132,7 @@
                 />
               </form>
             </th>
-            <th>
+            <th class="table-content">
               <form action="/delete-appt">
                 <label for="submit"></label>
                 <input
@@ -131,27 +147,31 @@
           </tr>
           <% } %>
         </table>
-      </div>
+        </div>
 
-      <div class="march">March
-        <table>
+        <div class="month-container"> 
+        <div class="march">March <button onclick="`${march()}`">↕</button>
+        <hr>
+        </div>
+        <div class="table-container">
+        <table class="march-table">
           <tr>
-            <th>Patient</th>
-            <th>Relationship</th>
-            <th>Date</th>
-            <th>Hospital</th>
-            <th>Department</th>
-            <th>Time</th>
-            <th>Edit</th>
-            <th>Delete</th>
+             <th class="table-header">Patient</th>
+            <th class="table-header">Relationship</th>
+            <th class="table-header">Date</th>
+            <th class="table-header">Hospital</th>
+            <th class="table-header">Department</th>
+            <th class="table-header">Time</th>
+            <th class="table-header">Edit</th>
+            <th class="table-header">Delete</th>
           </tr>
           <% for(let i = 0; i< sortMonthArray[2].length; i +=1){ %>
           <tr>
             <% for(let j = 0; j< 6; j +=1){ %>
-            <th><%= sortMonthArray[2][i][j] %></th>
+            <th class="table-content"><%= sortMonthArray[2][i][j] %></th>
             <% } %>
             
-            <th>
+            <th class="table-content">
               <form action="/edit-appt">
                 <label for="submit"></label>
                 <input
@@ -163,7 +183,7 @@
                 />
               </form>
             </th>
-            <th>
+            <th class="table-content">
               <form action="/delete-appt">
                 <label for="submit"></label>
                 <input
@@ -178,74 +198,83 @@
           </tr>
           <% } %>
         </table>
-      </div>
+        </div>
 
-      <div class="april">April
-        <table>
-          <tr>
-            <th>Patient</th>
-            <th>Relationship</th>
-            <th>Date</th>
-            <th>Hospital</th>
-            <th>Department</th>
-            <th>Time</th>
-            <th>Edit</th>
-            <th>Delete</th>
-          </tr>
-          <% for(let i = 0; i< sortMonthArray[3].length; i +=1){ %>
-          <tr>
-            <% for(let j = 0; j< 6; j +=1){ %>
-            <th><%= sortMonthArray[3][i][j] %></th>
+        <div class="month-container"> 
+          <div class="april">April <button onclick="`${april()}`">↕</button>
+          <hr>
+        </div>          
+        <div class="table-container">
+        <table class="april-table">
+            <tr>
+            <th class="table-header">Patient</th>
+            <th class="table-header">Relationship</th>
+            <th class="table-header">Date</th>
+            <th class="table-header">Hospital</th>
+            <th class="table-header">Department</th>
+            <th class="table-header">Time</th>
+            <th class="table-header">Edit</th>
+            <th class="table-header">Delete</th>
+            </tr>
+            <% for(let i = 0; i< sortMonthArray[3].length; i +=1){ %>
+            <tr>
+              <% for(let j = 0; j< 6; j +=1){ %>
+              <th class="table-content"><%= sortMonthArray[3][i][j] %></th>
+              <% } %>
+              
+              <th class="table-content">
+                <form action="/edit-appt">
+                  <label for="submit"></label>
+                  <input
+                    type="submit"
+                    id="submit"
+                    name="<%= `${[`${sortMonthArray[3][i][6]}`, `${sortMonthArray[3][i][7]}` ]}` %>"
+                    value="📝"
+                    onclick="return confirm('You can only change the date and time.');"
+                  />
+                </form>
+              </th>
+              <th class="table-content">
+                <form action="/delete-appt">
+                  <label for="submit"></label>
+                  <input
+                    type="submit"
+                    id="submit"
+                    name="<%= sortMonthArray[3][i][6] %>"
+                    value="❌"
+                    onclick="return confirm('Are you sure you want to delete this appointment?');"
+                  />
+                </form>
+              </th>
+            </tr>
             <% } %>
-            
-            <th>
-              <form action="/edit-appt">
-                <label for="submit"></label>
-                <input
-                  type="submit"
-                  id="submit"
-                  name="<%= `${[`${sortMonthArray[3][i][6]}`, `${sortMonthArray[3][i][7]}` ]}` %>"
-                  value="📝"
-                  onclick="return confirm('You can only change the date and time.');"
-                />
-              </form>
-            </th>
-            <th>
-              <form action="/delete-appt">
-                <label for="submit"></label>
-                <input
-                  type="submit"
-                  id="submit"
-                  name="<%= sortMonthArray[3][i][6] %>"
-                  value="❌"
-                  onclick="return confirm('Are you sure you want to delete this appointment?');"
-                />
-              </form>
-            </th>
-          </tr>
-          <% } %>
-        </table>
-      </div>
+          </table>
+          </div>
+        
 
-      <div class="may">May
-        <table>
+        <div class="month-container"> 
+          <div class="may">May <button onclick="`${may()}`">↕</button>
+            <hr>
+        </div> 
+        <div class="table-container">
+        <table class="may-table">
           <tr>
-            <th>Patient</th>
-            <th>Relationship</th>
-            <th>Date</th>
-            <th>Hospital</th>
-            <th>Department</th>
-            <th>Time</th>
-            <th>Edit</th>
-            <th>Delete</th>
+             <th class="table-header">Patient</th>
+            <th class="table-header">Relationship</th>
+            <th class="table-header">Date</th>
+            <th class="table-header">Hospital</th>
+            <th class="table-header">Department</th>
+            <th class="table-header">Time</th>
+            <th class="table-header">Edit</th>
+            <th class="table-header">Delete</th>
           </tr>
           <% for(let i = 0; i< sortMonthArray[4].length; i +=1){ %>
           <tr>
             <% for(let j = 0; j< 6; j +=1){ %>
-            <th><%= sortMonthArray[4][i][j] %></th>
+            <th class="table-content"><%= sortMonthArray[4][i][j] %></th>
             <% } %>
             
-            <th>
+            <th class="table-content">
               <form action="/edit-appt">
                 <label for="submit"></label>
                 <input
@@ -257,7 +286,7 @@
                 />
               </form>
             </th>
-            <th>
+            <th class="table-content">
               <form action="/delete-appt">
                 <label for="submit"></label>
                 <input
@@ -272,27 +301,31 @@
           </tr>
           <% } %>
         </table>
-      </div>
+        </div>
 
-      <div class="june">June
-        <table>
+        <div class="month-container"> 
+          <div class="june">June <button onclick="`${june()}`">↕</button>
+            <hr>
+        </div> 
+        <div class="table-container">
+        <table class="june-table">
           <tr>
-            <th>Patient</th>
-            <th>Relationship</th>
-            <th>Date</th>
-            <th>Hospital</th>
-            <th>Department</th>
-            <th>Time</th>
-            <th>Edit</th>
-            <th>Delete</th>
+             <th class="table-header">Patient</th>
+            <th class="table-header">Relationship</th>
+            <th class="table-header">Date</th>
+            <th class="table-header">Hospital</th>
+            <th class="table-header">Department</th>
+            <th class="table-header">Time</th>
+            <th class="table-header">Edit</th>
+            <th class="table-header">Delete</th>
           </tr>
           <% for(let i = 0; i< sortMonthArray[5].length; i +=1){ %>
           <tr>
             <% for(let j = 0; j< 6; j +=1){ %>
-            <th><%= sortMonthArray[5][i][j] %></th>
+            <th class="table-content"><%= sortMonthArray[5][i][j] %></th>
             <% } %>
             
-            <th>
+            <th class="table-content">
               <form action="/edit-appt">
                 <label for="submit"></label>
                 <input
@@ -304,7 +337,7 @@
                 />
               </form>
             </th>
-            <th>
+            <th class="table-content">
               <form action="/delete-appt">
                 <label for="submit"></label>
                 <input
@@ -319,27 +352,31 @@
           </tr>
           <% } %>
         </table>
-      </div>
+        </div>
 
-      <div class="july">July
-        <table>
+        <div class="month-container"> 
+          <div class="july">July <button onclick="`${july()}`">↕</button>
+            <hr>
+        </div> 
+        <div class="table-container">
+        <table class="july-table">
           <tr>
-            <th>Patient</th>
-            <th>Relationship</th>
-            <th>Date</th>
-            <th>Hospital</th>
-            <th>Department</th>
-            <th>Time</th>
-            <th>Edit</th>
-            <th>Delete</th>
+             <th class="table-header">Patient</th>
+            <th class="table-header">Relationship</th>
+            <th class="table-header">Date</th>
+            <th class="table-header">Hospital</th>
+            <th class="table-header">Department</th>
+            <th class="table-header">Time</th>
+            <th class="table-header">Edit</th>
+            <th class="table-header">Delete</th>
           </tr>
           <% for(let i = 0; i< sortMonthArray[6].length; i +=1){ %>
           <tr>
             <% for(let j = 0; j< 6; j +=1){ %>
-            <th><%= sortMonthArray[6][i][j] %></th>
+            <th class="table-content"><%= sortMonthArray[6][i][j] %></th>
             <% } %>
             
-            <th>
+            <th class="table-content">
               <form action="/edit-appt">
                 <label for="submit"></label>
                 <input
@@ -351,7 +388,7 @@
                 />
               </form>
             </th>
-            <th>
+            <th class="table-content">
               <form action="/delete-appt">
                 <label for="submit"></label>
                 <input
@@ -366,27 +403,31 @@
           </tr>
           <% } %>
         </table>
-      </div>
+        </div>
 
-      <div class="august">August
-        <table>
+        <div class="month-container"> 
+          <div class="august">August <button onclick="`${august()}`">↕</button>
+            <hr>
+        </div> 
+        <div class="table-container">
+        <table class="august-table">
           <tr>
-            <th>Patient</th>
-            <th>Relationship</th>
-            <th>Date</th>
-            <th>Hospital</th>
-            <th>Department</th>
-            <th>Time</th>
-            <th>Edit</th>
-            <th>Delete</th>
+             <th class="table-header">Patient</th>
+            <th class="table-header">Relationship</th>
+            <th class="table-header">Date</th>
+            <th class="table-header">Hospital</th>
+            <th class="table-header">Department</th>
+            <th class="table-header">Time</th>
+            <th class="table-header">Edit</th>
+            <th class="table-header">Delete</th>
           </tr>
           <% for(let i = 0; i< sortMonthArray[7].length; i +=1){ %>
           <tr>
             <% for(let j = 0; j< 6; j +=1){ %>
-            <th><%= sortMonthArray[7][i][j] %></th>
+            <th class="table-content"><%= sortMonthArray[7][i][j] %></th>
             <% } %>
             
-            <th>
+            <th class="table-content">
               <form action="/edit-appt">
                 <label for="submit"></label>
                 <input
@@ -398,7 +439,7 @@
                 />
               </form>
             </th>
-            <th>
+            <th class="table-content">
               <form action="/delete-appt">
                 <label for="submit"></label>
                 <input
@@ -413,27 +454,31 @@
           </tr>
           <% } %>
         </table>
-      </div>
+        </div>
 
-      <div class="september">September
-        <table>
+        <div class="month-container"> 
+          <div class="september">September <button onclick="`${september()}`">↕</button>
+            <hr>
+        </div> 
+        <div class="table-container">
+        <table class="september-table">
           <tr>
-            <th>Patient</th>
-            <th>Relationship</th>
-            <th>Date</th>
-            <th>Hospital</th>
-            <th>Department</th>
-            <th>Time</th>
-            <th>Edit</th>
-            <th>Delete</th>
+             <th class="table-header">Patient</th>
+            <th class="table-header">Relationship</th>
+            <th class="table-header">Date</th>
+            <th class="table-header">Hospital</th>
+            <th class="table-header">Department</th>
+            <th class="table-header">Time</th>
+            <th class="table-header">Edit</th>
+            <th class="table-header">Delete</th>
           </tr>
           <% for(let i = 0; i< sortMonthArray[8].length; i +=1){ %>
           <tr>
             <% for(let j = 0; j< 6; j +=1){ %>
-            <th><%= sortMonthArray[8][i][j] %></th>
+            <th class="table-content"><%= sortMonthArray[8][i][j] %></th>
             <% } %>
             
-            <th>
+            <th class="table-content">
               <form action="/edit-appt">
                 <label for="submit"></label>
                 <input
@@ -445,7 +490,7 @@
                 />
               </form>
             </th>
-            <th>
+            <th class="table-content">
               <form action="/delete-appt">
                 <label for="submit"></label>
                 <input
@@ -460,27 +505,31 @@
           </tr>
           <% } %>
         </table>
-      </div>
+        </div>
 
-      <div class="october">October
-        <table>
+        <div class="month-container"> 
+          <div class="october">October <button onclick="`${october()}`">↕</button>
+            <hr>
+        </div> 
+        <div class="table-container">
+        <table class="october-table">
           <tr>
-            <th>Patient</th>
-            <th>Relationship</th>
-            <th>Date</th>
-            <th>Hospital</th>
-            <th>Department</th>
-            <th>Time</th>
-            <th>Edit</th>
-            <th>Delete</th>
+             <th class="table-header">Patient</th>
+            <th class="table-header">Relationship</th>
+            <th class="table-header">Date</th>
+            <th class="table-header">Hospital</th>
+            <th class="table-header">Department</th>
+            <th class="table-header">Time</th>
+            <th class="table-header">Edit</th>
+            <th class="table-header">Delete</th>
           </tr>
           <% for(let i = 0; i< sortMonthArray[9].length; i +=1){ %>
           <tr>
             <% for(let j = 0; j< 6; j +=1){ %>
-            <th><%= sortMonthArray[9][i][j] %></th>
+            <th class="table-content"><%= sortMonthArray[9][i][j] %></th>
             <% } %>
             
-            <th>
+            <th class="table-content">
               <form action="/edit-appt">
                 <label for="submit"></label>
                 <input
@@ -492,7 +541,7 @@
                 />
               </form>
             </th>
-            <th>
+            <th class="table-content">
               <form action="/delete-appt">
                 <label for="submit"></label>
                 <input
@@ -507,27 +556,32 @@
           </tr>
           <% } %>
         </table>
-      </div>
+        </div>
+        
 
-      <div class="november">November
-        <table>
+        <div class="month-container"> 
+          <div class="november">November <button onclick="`${november()}`">↕</button>
+            <hr>
+        </div> 
+        <div class="table-container">
+        <table class="november-table">
           <tr>
-            <th>Patient</th>
-            <th>Relationship</th>
-            <th>Date</th>
-            <th>Hospital</th>
-            <th>Department</th>
-            <th>Time</th>
-            <th>Edit</th>
-            <th>Delete</th>
+             <th class="table-header">Patient</th>
+            <th class="table-header">Relationship</th>
+            <th class="table-header">Date</th>
+            <th class="table-header">Hospital</th>
+            <th class="table-header">Department</th>
+            <th class="table-header">Time</th>
+            <th class="table-header">Edit</th>
+            <th class="table-header">Delete</th>
           </tr>
           <% for(let i = 0; i< sortMonthArray[10].length; i +=1){ %>
           <tr>
             <% for(let j = 0; j< 6; j +=1){ %>
-            <th><%= sortMonthArray[10][i][j] %></th>
+            <th class="table-content"><%= sortMonthArray[10][i][j] %></th>
             <% } %>
             
-            <th>
+            <th class="table-content">
               <form action="/edit-appt">
                 <label for="submit"></label>
                 <input
@@ -539,7 +593,7 @@
                 />
               </form>
             </th>
-            <th>
+            <th class="table-content">
               <form action="/delete-appt">
                 <label for="submit"></label>
                 <input
@@ -554,27 +608,32 @@
           </tr>
           <% } %>
         </table>
-      </div>
-    
-      <div class="december">December
-        <table>
+        </div>
+        
+      
+        <div class="month-container"> 
+          <div class="december">December <button onclick="`${december()}`">↕</button>
+            <hr>
+        </div> 
+        <div class="table-container">
+        <table class="december-table">
           <tr>
-            <th>Patient</th>
-            <th>Relationship</th>
-            <th>Date</th>
-            <th>Hospital</th>
-            <th>Department</th>
-            <th>Time</th>
-            <th>Edit</th>
-            <th>Delete</th>
+             <th class="table-header">Patient</th>
+            <th class="table-header">Relationship</th>
+            <th class="table-header">Date</th>
+            <th class="table-header">Hospital</th>
+            <th class="table-header">Department</th>
+            <th class="table-header">Time</th>
+            <th class="table-header">Edit</th>
+            <th class="table-header">Delete</th>
           </tr>
           <% for(let i = 0; i< sortMonthArray[11].length; i +=1){ %>
           <tr>
             <% for(let j = 0; j< 6; j +=1){ %>
-            <th><%= sortMonthArray[11][i][j] %></th>
+            <th class="table-content"><%= sortMonthArray[11][i][j] %></th>
             <% } %>
             
-            <th>
+            <th class="table-content">
               <form action="/edit-appt">
                 <label for="submit"></label>
                 <input
@@ -586,7 +645,7 @@
                 />
               </form>
             </th>
-            <th>
+            <th class="table-content">
               <form action="/delete-appt">
                 <label for="submit"></label>
                 <input
@@ -601,35 +660,37 @@
           </tr>
           <% } %>
         </table>
+        </div>
+
       </div>
+      <script>
 
-    </div>
-    <script>
-
-      
-      function sortAppts () {
-        window.location.href = '/patient';
-      }
-      function submitPatientFilterForm()
-      { 
-        document.filterPatientForm.submit();
-      };
-      function submitHospitalFilterForm()
-      { 
-        document.filterHospitalForm.submit();
-      };
-      
-      
-
-      function january () {
-        var januaryDisplay = document.querySelector('.january-table');
-        if (januaryDisplay.style.display === "none") {
-        januaryDisplay.style.display = "block";
-        } else {
-          januaryDisplay.style.display = "none";
+        
+        function sortAppts () {
+          window.location.href = '/patient';
         }
-      }
+        function submitPatientFilterForm()
+        { 
+          document.filterPatientForm.submit();
+        };
+        function submitHospitalFilterForm()
+        { 
+          document.filterHospitalForm.submit();
+        };
+        
+        
 
-    </script>
+        function january () {
+          var januaryDisplay = document.querySelector('.january-table');
+          if (januaryDisplay.style.display === "none") {
+          januaryDisplay.style.display = "block";
+          } else {
+            januaryDisplay.style.display = "none";
+          }
+        }
+
+      </script>
+    </main>
+
   </body>
 </html>

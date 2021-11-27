@@ -1,10 +1,17 @@
 body {
-  margin-top: 50px;
+  margin-top: 15px;
 }
 
+main {
+  margin-left: 5rem;
+}
 .sort-container {
   display: flex;
   justify-content: end;
+}
+
+.table-container {
+  width: 100%;
 }
 
 .table {
@@ -26,9 +33,44 @@ body {
 .october,
 .november,
 .december {
-  padding: 15px;
+  margin-left: 400px;
+  font-size: 35px;
 }
 
-.january-table {
-  display: block;
+.month-container {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.january-table,
+.february-table,
+.march-table,
+.april-table,
+.may-table,
+.june-table,
+.july-table,
+.august-table,
+.september-table,
+.october-table,
+.november-table,
+.december-table {
+  margin-left: 400px;
+}
+
+.table-header {
+  font-size: 20px;
+  padding: 20px 50px 20px 0px;
+}
+
+.table-content {
+  font-size: 17px;
+}
+
+hr {
+  border: none;
+  height: 2px;
+  /* Set the hr color */
+  color: #333; /* old IE */
+  background-color: #333; /* Modern Browsers */
+  margin-right: 340px;
 }
