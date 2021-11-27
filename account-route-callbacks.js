@@ -52,7 +52,7 @@ export const loginFormResults = (req, res) => {
   const sqlQuery = 'SELECT * FROM users WHERE email = $1';
   pool.query(sqlQuery, enteredEmail).then((result) => {
     if (result.rows.length === 0) {
-      res.status(403).send('Sorry! Please try again!');
+      res.redirect('/main/invalid');
       return;
     }
 
@@ -64,7 +64,8 @@ export const loginFormResults = (req, res) => {
       res.cookie('userId', enteredEmail[0]);
       res.redirect('/');
     } else {
-      res.send('Sorry! Please try again!').status(403);
+      // res.send('Sorry! Please try again!').status(403);
+      res.redirect('/main/invalid');
     }
   });
 };

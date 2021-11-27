@@ -27,6 +27,10 @@ export const mainPage = (req, res) => {
   res.render('main');
 };
 
+export const mainPageInvalid = (req, res) => {
+  res.render('main-invalid');
+};
+
 export const homePage = (req, res) => {
   if (req.isUserLoggedIn === false) {
     res.redirect('/main');

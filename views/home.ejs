@@ -43,9 +43,9 @@
 
         
         <div class="month-container"> 
-          <div class="january">January <button onclick="`${january()}`">↕</button>
-            <hr>
+          <div class="january" onclick="january()">January 
           </div> 
+          <div class="triangle_down1" onclick="january()"></div>
         </div> 
         <div class="table-container">
         <table class="january-table">
@@ -98,14 +98,14 @@
         
 
         <div class="month-container"> 
-          <div class="february">February <button onclick="`${february()}`">↕</button>
-          <hr>
+          <div class="february" onclick="february()">February 
           </div> 
+          <div class="triangle_down2" onclick="february()"></div>
         </div> 
         <div class="table-container">
         <table class="february-table">
           <tr>
-             <th class="table-header">Patient</th>
+            <th class="table-header">Patient</th>
             <th class="table-header">Relationship</th>
             <th class="table-header">Date</th>
             <th class="table-header">Hospital</th>
@@ -150,9 +150,10 @@
         </div>
 
         <div class="month-container"> 
-        <div class="march">March <button onclick="`${march()}`">↕</button>
-        <hr>
-        </div>
+          <div class="march" onclick="march()">March 
+          </div> 
+          <div class="triangle_down3" onclick="march()"></div>
+        </div> 
         <div class="table-container">
         <table class="march-table">
           <tr>
@@ -201,9 +202,10 @@
         </div>
 
         <div class="month-container"> 
-          <div class="april">April <button onclick="`${april()}`">↕</button>
-          <hr>
-        </div>          
+          <div class="april" onclick="april()">April 
+          </div> 
+          <div class="triangle_down4" onclick="april()"></div>
+        </div>      
         <div class="table-container">
         <table class="april-table">
             <tr>
@@ -253,8 +255,9 @@
         
 
         <div class="month-container"> 
-          <div class="may">May <button onclick="`${may()}`">↕</button>
-            <hr>
+          <div class="may" onclick="may()">May 
+          </div> 
+          <div class="triangle_down5" onclick="may()"></div>
         </div> 
         <div class="table-container">
         <table class="may-table">
@@ -304,8 +307,9 @@
         </div>
 
         <div class="month-container"> 
-          <div class="june">June <button onclick="`${june()}`">↕</button>
-            <hr>
+          <div class="june" onclick="june()">June 
+          </div> 
+          <div class="triangle_down6" onclick="june()"></div>
         </div> 
         <div class="table-container">
         <table class="june-table">
@@ -355,8 +359,9 @@
         </div>
 
         <div class="month-container"> 
-          <div class="july">July <button onclick="`${july()}`">↕</button>
-            <hr>
+          <div class="july" onclick="july()">July 
+          </div> 
+          <div class="triangle_down7" onclick="july()"></div>
         </div> 
         <div class="table-container">
         <table class="july-table">
@@ -406,8 +411,9 @@
         </div>
 
         <div class="month-container"> 
-          <div class="august">August <button onclick="`${august()}`">↕</button>
-            <hr>
+          <div class="august" onclick="august()">August 
+          </div> 
+          <div class="triangle_down8" onclick="august()"></div>
         </div> 
         <div class="table-container">
         <table class="august-table">
@@ -457,8 +463,9 @@
         </div>
 
         <div class="month-container"> 
-          <div class="september">September <button onclick="`${september()}`">↕</button>
-            <hr>
+          <div class="september" onclick="september()">September 
+          </div> 
+          <div class="triangle_down9" onclick="september()"></div>
         </div> 
         <div class="table-container">
         <table class="september-table">
@@ -508,8 +515,9 @@
         </div>
 
         <div class="month-container"> 
-          <div class="october">October <button onclick="`${october()}`">↕</button>
-            <hr>
+          <div class="october" onclick="october()">October 
+          </div> 
+          <div class="triangle_down10" onclick="october()"></div>
         </div> 
         <div class="table-container">
         <table class="october-table">
@@ -560,8 +568,9 @@
         
 
         <div class="month-container"> 
-          <div class="november">November <button onclick="`${november()}`">↕</button>
-            <hr>
+          <div class="november" onclick="november()">November 
+          </div> 
+          <div class="triangle_down11" onclick="november()"></div>
         </div> 
         <div class="table-container">
         <table class="november-table">
@@ -612,8 +621,9 @@
         
       
         <div class="month-container"> 
-          <div class="december">December <button onclick="`${december()}`">↕</button>
-            <hr>
+          <div class="december" onclick="december()">December 
+          </div> 
+          <div class="triangle_down12" onclick="december()"></div>
         </div> 
         <div class="table-container">
         <table class="december-table">
@@ -678,17 +688,149 @@
           document.filterHospitalForm.submit();
         };
         
+       
         
-
         function january () {
+          var arrow = document.querySelector('.triangle_down1');
           var januaryDisplay = document.querySelector('.january-table');
           if (januaryDisplay.style.display === "none") {
-          januaryDisplay.style.display = "block";
+            arrow.style.transform = "rotate(0deg)"
+            januaryDisplay.style.display = "block";
           } else {
+            arrow.style.transform = "rotate(180deg)"
+            januaryDisplay.style.display = "none";
+          }
+        }
+        
+        function february () {
+          var arrow = document.querySelector('.triangle_down2');
+          var januaryDisplay = document.querySelector('.february-table');
+          if (januaryDisplay.style.display === "none") {
+            arrow.style.transform = "rotate(0deg)"
+            januaryDisplay.style.display = "block";
+          } else {
+            arrow.style.transform = "rotate(180deg)"
             januaryDisplay.style.display = "none";
           }
         }
 
+        function march () {
+          var arrow = document.querySelector('.triangle_down3');
+          var januaryDisplay = document.querySelector('.march-table');
+          if (januaryDisplay.style.display === "none") {
+            arrow.style.transform = "rotate(0deg)"
+            januaryDisplay.style.display = "block";
+          } else {
+            arrow.style.transform = "rotate(180deg)"
+            januaryDisplay.style.display = "none";
+          }
+        }
+
+        function april () {
+          var arrow = document.querySelector('.triangle_down4');
+          var januaryDisplay = document.querySelector('.april-table');
+          if (januaryDisplay.style.display === "none") {
+            arrow.style.transform = "rotate(0deg)"
+            januaryDisplay.style.display = "block";
+          } else {
+            arrow.style.transform = "rotate(180deg)"
+            januaryDisplay.style.display = "none";
+          }
+        }
+        function may () {
+          var arrow = document.querySelector('.triangle_down5');
+          var januaryDisplay = document.querySelector('.may-table');
+          if (januaryDisplay.style.display === "none") {
+            arrow.style.transform = "rotate(0deg)"
+            januaryDisplay.style.display = "block";
+          } else {
+            arrow.style.transform = "rotate(180deg)"
+            januaryDisplay.style.display = "none";
+          }
+        }
+        function june () {
+          var arrow = document.querySelector('.triangle_down6');
+          var januaryDisplay = document.querySelector('.june-table');
+          if (januaryDisplay.style.display === "none") {
+            arrow.style.transform = "rotate(0deg)"
+            januaryDisplay.style.display = "block";
+          } else {
+            arrow.style.transform = "rotate(180deg)"
+            januaryDisplay.style.display = "none";
+          }
+        }
+
+        function july () {
+          var arrow = document.querySelector('.triangle_down7');
+          var januaryDisplay = document.querySelector('.july-table');
+          if (januaryDisplay.style.display === "none") {
+            arrow.style.transform = "rotate(0deg)"
+            januaryDisplay.style.display = "block";
+          } else {
+            arrow.style.transform = "rotate(180deg)"
+            januaryDisplay.style.display = "none";
+          }
+        }
+
+        function august () {
+          var arrow = document.querySelector('.triangle_down8');
+          var januaryDisplay = document.querySelector('.august-table');
+          if (januaryDisplay.style.display === "none") {
+            arrow.style.transform = "rotate(0deg)"
+            januaryDisplay.style.display = "block";
+          } else {
+            arrow.style.transform = "rotate(180deg)"
+            januaryDisplay.style.display = "none";
+          }
+        }
+
+        function september () {
+          var arrow = document.querySelector('.triangle_down9');
+          var januaryDisplay = document.querySelector('.september-table');
+          if (januaryDisplay.style.display === "none") {
+            arrow.style.transform = "rotate(0deg)"
+            januaryDisplay.style.display = "block";
+          } else {
+            arrow.style.transform = "rotate(180deg)"
+            januaryDisplay.style.display = "none";
+          }
+        }
+
+        function october () {
+          var arrow = document.querySelector('.triangle_down10');
+          var januaryDisplay = document.querySelector('.october-table');
+          if (januaryDisplay.style.display === "none") {
+            arrow.style.transform = "rotate(0deg)"
+            januaryDisplay.style.display = "block";
+          } else {
+            arrow.style.transform = "rotate(180deg)"
+            januaryDisplay.style.display = "none";
+          }
+        }
+
+        function november () {
+          var arrow = document.querySelector('.triangle_down11');
+          var januaryDisplay = document.querySelector('.november-table');
+          if (januaryDisplay.style.display === "none") {
+            arrow.style.transform = "rotate(0deg)"
+            januaryDisplay.style.display = "block";
+          } else {
+            arrow.style.transform = "rotate(180deg)"
+            januaryDisplay.style.display = "none";
+          }
+        }
+
+        function december () {
+          var arrow = document.querySelector('.triangle_down12');
+          var januaryDisplay = document.querySelector('.december-table');
+          if (januaryDisplay.style.display === "none") {
+            arrow.style.transform = "rotate(0deg)"
+            januaryDisplay.style.display = "block";
+          } else {
+            arrow.style.transform = "rotate(180deg)"
+            januaryDisplay.style.display = "none";
+          }
+        }
       </script>
     </main>
 

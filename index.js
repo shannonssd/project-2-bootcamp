@@ -7,7 +7,7 @@ import {
 } from './account-route-callbacks.js';
 import {
   // eslint-disable-next-line max-len
-  mainPage, homePage, newInfoForm, newInfo, newInfoDisplay, newInfoFormHos, newInfoHos, newInfoDisplayHos, newInfoFormDep, newInfoDep, newInfoDisplayDep, addApptForm, addAppt, editApptForm, editAppt, deleteAppt,
+  mainPage, mainPageInvalid, homePage, newInfoForm, newInfo, newInfoDisplay, newInfoFormHos, newInfoHos, newInfoDisplayHos, newInfoFormDep, newInfoDep, newInfoDisplayDep, addApptForm, addAppt, editApptForm, editAppt, deleteAppt,
   homePagePatient,
 } from './route-callbacks.js';
 
@@ -34,6 +34,7 @@ app.get('/logout', logout);
 
 // #################### Routes
 app.get('/main', mainPage);
+app.get('/main/invalid', mainPageInvalid);
 app.get('/', homePage);
 app.get('/patient', homePagePatient);
 
