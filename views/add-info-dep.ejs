@@ -2,12 +2,16 @@
 
   <body>
     <div class="main">
-     <div>
-        <div><a href="/add-info">New Patient</a></div>
-       <div><a href="/add-info/hospital">New Hospital</a></div>
-       <div><a href="/add-info/department">New Department</a></div>
-      </div>
-      <form action="/add-info/department" method="POST">
+      <br /><br />
+      <div id="form">
+        <div class="buttons">
+          <button class="sign-up-link" onclick="window.location.href='/add-info'"> New Patient</button>
+          <button class="sign-up-link" onclick="window.location.href='/add-info/hospital'"> New Hospital</button>
+          <button class="sign-up-link" onclick="window.location.href='/add-info/department'"> New Department</button>
+        </div>
+
+        <div class="details">
+        <form action="/add-info/department" class="form-details" method="POST">
         
         <label for="new-department">New Department:</label><br />
         <input
@@ -18,8 +22,10 @@
           required
         /><br /><br />
         
-        <input type="submit" submit />
+        <input type="submit" name="submit" id="submit" />
       </form>
+        </div>
+      </div>
     </div>
   </body>
 </html>

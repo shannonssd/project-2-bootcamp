@@ -2,33 +2,36 @@
 
   <body>
     <div class="main">
-      <div>
-        <div><a href="/add-info">New Patient</a></div>
-       <div><a href="/add-info/hospital">New Hospital</a></div>
-       <div><a href="/add-info/department">New Department</a></div>
-      </div>
       <br /><br />
       <div id="form">
-        <form action="/add-info" method="POST">
-          <label for="new-patient">New Patient:</label><br />
-          <input
-            type="text"
-            id="new-patient"
-            name="new-patient"
-            placeholder="New Patient"
-            required
-          /><br /><br />
-          <label for="relationship">Relationship To You:</label><br />
-          <input
-            type="text"
-            id="relationship"
-            name="relationship"
-            placeholder="Relationship To You"
-            required
-          /><br /><br />
-        
-          <input type="submit" submit />
-        </form>
+        <div class="buttons">
+          <button class="sign-up-link" onclick="window.location.href='/add-info'"> New Patient</button>
+          <button class="sign-up-link" onclick="window.location.href='/add-info/hospital'"> New Hospital</button>
+          <button class="sign-up-link" onclick="window.location.href='/add-info/department'"> New Department</button>
+        </div>
+
+        <div class="details">
+          <form action="/add-info" class="form-details" method="POST">
+            <label for="new-patient">New Patient:</label><br />
+            <input
+              type="text"
+              id="new-patient"
+              name="new-patient"
+              placeholder="New Patient"
+              required
+            /><br /><br />
+            <label for="relationship">Relationship To You:</label><br />
+            <input
+              type="text"
+              id="relationship"
+              name="relationship"
+              placeholder="Relationship To You"
+              required
+            /><br /><br />
+          
+            <input type="submit" name="submit" id="submit" />
+          </form>   
+        </div>
       </div>
     </div>
   </body>
