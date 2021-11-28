@@ -4,7 +4,6 @@
     <main>
 
       <div class="sort-container">
-
         <div class="sort">
           <form action="/patient" name="sort">
             <select name="sort" id="sort" class="sort" onchange="`${sortAppts()}`">
@@ -43,12 +42,12 @@
 
         
         <div class="month-container"> 
-          <div class="january" onclick="january()">January 
+          <div class="january " onclick="january()">January 
           </div> 
-          <div class="triangle_down1" onclick="january()"></div>
+          <div class="triangle_down1 " onclick="january()"></div>
         </div> 
         <div class="table-container">
-        <table class="january-table">
+        <table class="january-table ">
           <tr>
             <th class="table-header">Patient</th>
             <th class="table-header">Relationship</th>
@@ -98,12 +97,12 @@
         
 
         <div class="month-container"> 
-          <div class="february" onclick="february()">February 
+          <div class="february " onclick="february()">February 
           </div> 
-          <div class="triangle_down2" onclick="february()"></div>
+          <div class="triangle_down2 " onclick="february()"></div>
         </div> 
         <div class="table-container">
-        <table class="february-table">
+        <table class="february-table ">
           <tr>
             <th class="table-header">Patient</th>
             <th class="table-header">Relationship</th>
@@ -150,12 +149,12 @@
         </div>
 
         <div class="month-container"> 
-          <div class="march" onclick="march()">March 
+          <div class="march " onclick="march()">March 
           </div> 
-          <div class="triangle_down3" onclick="march()"></div>
+          <div class="triangle_down3 " onclick="march()"></div>
         </div> 
         <div class="table-container">
-        <table class="march-table">
+        <table class="march-table ">
           <tr>
              <th class="table-header">Patient</th>
             <th class="table-header">Relationship</th>
@@ -687,9 +686,7 @@
         { 
           document.filterHospitalForm.submit();
         };
-        
        
-        
         function january () {
           var arrow = document.querySelector('.triangle_down1');
           var januaryDisplay = document.querySelector('.january-table');
