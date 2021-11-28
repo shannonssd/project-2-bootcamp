@@ -6,6 +6,7 @@ body {
 main {
   margin-left: 5rem;
 }
+
 .sort-container {
   display: flex;
   justify-content: end;

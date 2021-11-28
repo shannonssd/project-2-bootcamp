@@ -7,30 +7,47 @@ html {
   font-family: sans-serif;
 }
 
-.main {
-  margin-left: 5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.nav {
+  margin: 0;
+  background-color: black;
+  height: 64px;
+  z-index: 2;
 }
 
-#form {
+.title {
+  font-size: 50px;
+  font-family: sans-serif;
+  font-weight: bold;
+  padding-left: 25px;
+  /* background: -webkit-linear-gradient(yellow, red); */
+  background-color: white;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.title-container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+#first {
   width: 350px;
   height: auto;
-  margin: 30px auto 0;
+  margin: 120px auto 0;
   padding: 60px;
   background-color: rgb(255, 243, 228);
   color: #333;
   border: 2px solid rgb(255, 223, 181);
   border-radius: 40px 0 40px 0;
 }
-
 label {
   font-size: 15px;
   font-weight: 700;
 }
 
-#patient-name {
+#email {
   border: 1px solid #dadada;
   margin-top: 10px;
   margin-bottom: 20px;
@@ -50,7 +67,7 @@ label {
   /* For Mozilla Web Browser */
 }
 
-#hospital {
+#password {
   border: 1px solid #dadada;
   margin-top: 10px;
   margin-bottom: 30px;
@@ -69,27 +86,6 @@ label {
   -moz-border-radius: 5px;
   /* For Mozilla Web Browser */
 }
-
-#date {
-  border: 1px solid #dadada;
-  margin-top: 10px;
-  margin-bottom: 30px;
-  padding-left: 15px;
-  width: 310px;
-  height: 30px;
-  font-size: 14px;
-  box-shadow: 0 0 10px;
-  -webkit-box-shadow: 0 0 10px;
-  /* For I.E */
-  -moz-box-shadow: 0 0 10px;
-  /* For Mozilla Web Browser */
-  border-radius: 5px;
-  -webkit-border-radius: 5px;
-  /* For I.E */
-  -moz-border-radius: 5px;
-  /* For Mozilla Web Browser */
-}
-
 #submit {
   background-color: rgb(3, 189, 3);
   border-radius: 5px;
@@ -101,12 +97,4 @@ label {
 }
 #submit:hover {
   background-color: rgb(4, 227, 4);
-}
-
-tbody {
-  width: 100%;
-}
-.depart-time {
-  display: flex;
-  justify-content: space-between;
 }

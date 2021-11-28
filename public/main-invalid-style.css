@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  font-family: sans-serif;
 }
 
 body,
@@ -17,12 +18,12 @@ html {
 }
 
 .title {
-  font-size: 50px;
-  font-family: "Open Sans";
-  font-weight: bold;
   padding-left: 25px;
-  background: -webkit-linear-gradient(yellow, red);
-  /* background-color: rgb(225, 54, 23); */
+  font-size: 50px;
+  font-family: sans-serif;
+  font-weight: bold;
+  /* background: -webkit-linear-gradient(yellow, red); */
+  background-color: white;
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -38,7 +39,6 @@ html {
   justify-content: center;
   height: 100%;
   flex-direction: column;
-  padding-top: 7px;
 }
 
 .login {
@@ -57,14 +57,17 @@ html {
 .signup {
   display: flex;
   justify-content: end;
-  padding-right: 18px;
+  padding-right: 16px;
+  padding-top: 5px;
 }
 
 .sign-up-link {
-  color: rgb(254, 232, 201);
-  font-family: "Open Sans";
+  background-color: rgb(58, 64, 255);
+  color: wheat;
+  font-family: sans-serif;
   font-weight: bold;
   font-size: 12px;
+  padding: 0px 4px 0px 4px;
 }
 
 /* .slideshow-container {
@@ -143,8 +146,13 @@ img {
 }
 
 .sign-in {
-  background-color: black;
-  color: rgb(254, 232, 201);
+  background-color: rgba(3, 187, 40, 0.879);
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 12px;
+  color: wheat;
+  height: 100%;
+  padding: 0px 4px 0px 4px;
 }
 
 #email,

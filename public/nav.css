@@ -76,6 +76,7 @@ main {
 .link-text {
   display: none;
   margin-left: 1rem;
+  /* background: -webkit-linear-gradient(yellow, rgb(240, 78, 78)); */
   background: -webkit-linear-gradient(yellow, rgb(240, 78, 78));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

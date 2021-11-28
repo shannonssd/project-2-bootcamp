@@ -1,117 +1,121 @@
-
   <%- include('nav', { link: "home-patient-style.css" }); %>
   <body>
-   <div class="sort-container">
-      <div class="sort">
-        <form action="/" name="sort">
-          <select name="sort" id="sort" class="sort" onchange="`${sortAppts()}`">
-            <option value="date"> Date </option>
-            <option value="patient" disabled selected> Patient  </option>
-            <option value="" disabled selected>Sort By</option>
-          </select>
-        </form>
-      </div>
-      <div class="filter-month">
-        <form action="/patient" name="filterMonthForm"  >
-          <label for="filter-month" > </label>
-          <select name="filter-month" id="filter-month" class="filter-month" onchange="`${submitMonthFilterForm()}`">
-            <option value="" disabled selected>Filter By Month</option>
-            <% sortNameArray[sortNameArray.length-1].forEach( (element) => { %>
-            <option value="<%= element %>"><%= element %></option>
-            <% }); %>
-          </select>
-        </form>
-      </div>
+    <main>
+      <div class="sort-container">
+          <div class="sort">
+            <form action="/" name="sort">
+              <select name="sort" id="sort" class="sort" onchange="`${sortAppts()}`">
+                <option value="date"> Date </option>
+                <option value="patient" disabled selected> Patient  </option>
+                <option value="" disabled selected>Sort By</option>
+              </select>
+            </form>
+          </div>
+          <div class="filter-month">
+            <form action="/patient" name="filterMonthForm"  >
+              <label for="filter-month" > </label>
+              <select name="filter-month" id="filter-month" class="filter-month" onchange="`${submitMonthFilterForm()}`">
+                <option value="" disabled selected>Filter By Month</option>
+                <% sortNameArray[sortNameArray.length-1].forEach( (element) => { %>
+                <option value="<%= element %>"><%= element %></option>
+                <% }); %>
+              </select>
+            </form>
+          </div>
 
-       <div class="filter-hospital">
-        <form action="/patient" name="filterHospitalForm"  >
-          <label for="filter-hospital" > </label>
-          <select name="filter-hospital" id="filter-hospital" class="filter-hospital" onchange="`${submitHospitalFilterForm()}`">
-            <option value="" disabled selected>Filter By Hospital</option>
-            <% sortNameArray[sortNameArray.length-2].forEach( (element) => { %>
-            <option value="<%= element %>"><%= element %></option>
-            <% }); %>
-          </select>
-        </form>
-      </div>
-    </div>
-
-    <div class="table">
-      <% for (let m = 0; m < sortNameArray[sortNameArray.length-3].length; m +=1){ %>
-        <div class="name"> <%= sortNameArray[sortNameArray.length-3][m] %>
-          <span><button onclick="`${nameTableDisplay()}`"> ↕</button></span>
-          <table class="name-table">
-            <tr>
-              <th>Patient</th>
-              <th>Relationship</th>
-              <th>Date</th>
-              <th>Hospital</th>
-              <th>Department</th>
-              <th>Time</th>
-              <th>Edit</th>
-              <th>Delete</th>
-            </tr>
-            <% for (let i = 0; i< sortNameArray[m].length; i +=1){ %>
-              <tr>
-                <% for (let j = 0; j< 6; j +=1){ %>
-                <th><%= sortNameArray[m][i][j] %></th>
-                <% } %>
-                
-                <th>
-                  <form action="/edit-appt">
-                    <label for="submit"></label>
-                    <input
-                      type="submit"
-                      id="submit"
-                      name="<%= `${[`${sortNameArray[m][i][6]}`, `${sortNameArray[m][i][7]}` ]}` %>"
-                      value="📝"
-                      onclick="return confirm('You can only change the date and time.');"
-                    />
-                  </form>
-                </th>
-                <th>
-                  <form action="/delete-appt">
-                    <label for="submit"></label>
-                    <input
-                      type="submit"
-                      id="submit"
-                      name="<%= sortNameArray[m][i][6] %>"
-                      value="❌"
-                      onclick="return confirm('Are you sure you want to delete this appointment?');"
-                    />
-                  </form>
-                </th>
-              </tr>
-            <% } %>
-          </table>
+          <div class="filter-hospital">
+            <form action="/patient" name="filterHospitalForm"  >
+              <label for="filter-hospital" > </label>
+              <select name="filter-hospital" id="filter-hospital" class="filter-hospital" onchange="`${submitHospitalFilterForm()}`">
+                <option value="" disabled selected>Filter By Hospital</option>
+                <% sortNameArray[sortNameArray.length-2].forEach( (element) => { %>
+                <option value="<%= element %>"><%= element %></option>
+                <% }); %>
+              </select>
+            </form>
+          </div>
         </div>
-      <% } %>
-    </div>
-    
-    <script>
-      function sortAppts () {
-        console.log('working')
-        window.location.href = '/';
-      }
 
-      function submitMonthFilterForm()
-      { 
-        document.filterMonthForm.submit();
-      };
-      function submitHospitalFilterForm()
-      { 
-        document.filterHospitalForm.submit();
-      };
-      
-      function nameTableDisplay () {
-        var nameTable = document.querySelector('.name-table');
-        if (nameTable.style.display === "none") {
-        nameTable.style.display = "block";
-        } else {
-          nameTable.style.display = "none";
-        }
-      }
+        <div class="table">
+          <% for (let m = 0; m < sortNameArray[sortNameArray.length-3].length; m +=1){ %>
+            <div class="name-container">
+              <div class="name"> <%= sortNameArray[sortNameArray.length-3][m] %>
+              </div>
+            </div>
+            <div class="table-container">
+              <table class="name-table">
+                <tr>
+                  <th class="table-header">Patient</th>
+                  <th class="table-header">Relationship</th>
+                  <th class="table-header">Date</th>
+                  <th class="table-header">Hospital</th>
+                  <th class="table-header">Department</th>
+                  <th class="table-header">Time</th>
+                  <th class="table-header">Edit</th>
+                  <th class="table-header">Delete</th>
+                </tr>
+                <% for (let i = 0; i< sortNameArray[m].length; i +=1){ %>
+                  <tr>
+                    <% for (let j = 0; j< 6; j +=1){ %>
+                    <th class="table-content"><%= sortNameArray[m][i][j] %></th>
+                    <% } %>
+                    
+                    <th class="table-content">
+                      <form action="/edit-appt">
+                        <label for="submit"></label>
+                        <input
+                          type="submit"
+                          id="submit"
+                          name="<%= `${[`${sortNameArray[m][i][6]}`, `${sortNameArray[m][i][7]}` ]}` %>"
+                          value="📝"
+                          onclick="return confirm('You can only change the date and time.');"
+                        />
+                      </form>
+                    </th>
+                    <th class="table-content">
+                      <form action="/delete-appt">
+                        <label for="submit"></label>
+                        <input
+                          type="submit"
+                          id="submit"
+                          name="<%= sortNameArray[m][i][6] %>"
+                          value="❌"
+                          onclick="return confirm('Are you sure you want to delete this appointment?');"
+                        />
+                      </form>
+                    </th>
+                  </tr>
+                <% } %>
+              </table>
+            </div>
+          <% } %>
+        </div>
+        
+        <script>
+          function sortAppts () {
+            console.log('working')
+            window.location.href = '/';
+          }
 
-    </script>
+          function submitMonthFilterForm()
+          { 
+            document.filterMonthForm.submit();
+          };
+          function submitHospitalFilterForm()
+          { 
+            document.filterHospitalForm.submit();
+          };
+          
+          function nameTableDisplay () {
+            var nameTable = document.querySelector('.name-table');
+            if (nameTable.style.display === "none") {
+            nameTable.style.display = "block";
+            } else {
+              nameTable.style.display = "none";
+            }
+          }
+
+        </script>
+    </main>
   </body>
 </html>

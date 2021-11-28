@@ -62,7 +62,7 @@ export const loginFormResults = (req, res) => {
       const hashedCookieString = getHash(enteredEmail[0]);
       res.cookie('loggedInHash', hashedCookieString);
       res.cookie('userId', enteredEmail[0]);
-      res.redirect('/');
+      res.redirect('/patient');
     } else {
       // res.send('Sorry! Please try again!').status(403);
       res.redirect('/main/invalid');

@@ -4,57 +4,60 @@
   <body>
     <div class="main">
 
-    
-    <form action="/add-appt" method="POST">
-      Patient Name:
-      <select name="patient-name" id="patient-name">
-        <% formData[0].forEach((element) => { %>
-        <option value="<%= element.name %>"><%= element.name %></option>
-        <%})%>
-      </select>
-      <br /><br />
-      Hospital:
-      <select name="hospital" id="hospital">
-        <% formData[1].forEach((element) => { %>
-        <option value="<%= element.name %>"><%= element.name %></option>
-        <%})%>
-      </select>
-      <br /><br />
-      Date:
-      <label for="date" name="dateForm"></label>
-      <input type="date" id="date" name="date" />
-      <br /><br />
+      <div id="form">
+        <form action="/add-appt"  method="POST">
+          Patient Name:
+          <select name="patient-name" id="patient-name">
+            <% formData[0].forEach((element) => { %>
+            <option value="<%= element.name %>"><%= element.name %></option>
+            <%})%>
+          </select>
+          <br /><br />
+          Hospital:
+          <select name="hospital" id="hospital">
+            <% formData[1].forEach((element) => { %>
+            <option value="<%= element.name %>"><%= element.name %></option>
+            <%})%>
+          </select>
+          <br /><br />
+          Date:
+          <label for="date" name="dateForm"></label>
+          <input type="date" id="date" name="date" />
+          <br /><br />
 
-      <table>
-        <tr>
-          <th>Department:</th>
-          <th>Time:</th>
-        </tr>
+          <table class="depart-time">
+            
 
-        <% formData[2].forEach((element) => { %>
-        <tr>
-          <td>
-            <label for="department"><%= element.name %></label>
-            <input
-              type="checkbox"
-              id="department"
-              name="department"
-              value="<%= element.name %>"
-            />
-          </td>
+            
+              <tr class="depart-time">
+                <th>Department:</th>
+                <th>Time:</th>
+              </tr>
+            <% formData[2].forEach((element) => { %>
+            <tr class="depart-time">
+              <td>
+                <label for="department"><%= element.name %></label>
+                <input
+                  type="checkbox"
+                  id="department"
+                  name="department"
+                  value="<%= element.name %>"
+                />
+              </td>
 
-          <td>
-            <label for="time"></label>
-            <input type="time" id="time" name="time" />
-          </td>
-        </tr>
-        <%})%>
-      </table>
-      <input type="submit" value="Submit" />
+              <td>
+                <label for="time"></label>
+                <input type="time" id="time" name="time" />
+              </td>
+            </tr>
+            <%})%>
+          </table>
+          <input type="submit" id="submit" value="Submit" />
 
-      <br /><br />
-      
-    </form>
+          <br /><br />
+          
+        </form> 
+      </div>
     </div>
   </body>
 </html>
