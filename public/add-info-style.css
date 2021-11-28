@@ -1,6 +1,31 @@
+body,
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: rgb(254, 251, 247);
+  font-family: sans-serif;
+}
+
 .main {
+  margin-left: 5rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 400px;
+}
+
+#form {
+  width: 350px;
+  height: auto;
+  margin: 30px;
+  padding: 40px;
+  background-color: rgb(255, 243, 228);
+  color: #333;
+  border: 2px solid rgb(255, 223, 181);
+  border-radius: 40px 0 40px 0;
+}
+
+label {
+  font-size: 15px;
+  font-weight: 700;
 }

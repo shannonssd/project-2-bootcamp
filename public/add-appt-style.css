@@ -17,8 +17,8 @@ html {
 #form {
   width: 350px;
   height: auto;
-  margin: 30px auto 0;
-  padding: 60px;
+  margin: 30px;
+  padding: 40px;
   background-color: rgb(255, 243, 228);
   color: #333;
   border: 2px solid rgb(255, 223, 181);
@@ -89,8 +89,21 @@ label {
   -moz-border-radius: 5px;
   /* For Mozilla Web Browser */
 }
-
+#time {
+  padding-left: 15px;
+  box-shadow: 0 0 10px;
+  -webkit-box-shadow: 0 0 10px;
+  /* For I.E */
+  -moz-box-shadow: 0 0 10px;
+  /* For Mozilla Web Browser */
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  /* For I.E */
+  -moz-border-radius: 5px;
+  /* For Mozilla Web Browser */
+}
 #submit {
+  margin-top: 20px;
   background-color: rgb(3, 189, 3);
   border-radius: 5px;
   border: none;
@@ -109,4 +122,9 @@ tbody {
 .depart-time {
   display: flex;
   justify-content: space-between;
+}
+
+tr,
+td {
+  padding: 4px;
 }
