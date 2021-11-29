@@ -62,12 +62,16 @@ html {
 }
 
 .sign-up-link {
-  background-color: rgb(58, 64, 255);
+  background-color: rgb(0, 0, 249);
   color: wheat;
   font-family: sans-serif;
   font-weight: bold;
   font-size: 12px;
   padding: 0px 4px 0px 4px;
+}
+
+.sign-up-link:hover {
+  background-color: rgb(58, 64, 255);
 }
 
 /* .slideshow-container {
@@ -116,13 +120,13 @@ img {
   background-color: #bbb;
   border-radius: 50%;
   display: inline-block;
-  transition: background-color 2.6s ease;
+  transition: background-color 2.3s ease;
 }
 
 .dots {
   position: relative;
   bottom: 42px;
-  left: 900px;
+  /* left: 900px; */
 }
 .active {
   background-color: #717171;
@@ -154,6 +158,10 @@ img {
   color: wheat;
   height: 100%;
   padding: 0px 4px 0px 4px;
+}
+
+.sign-in:hover {
+  background-color: rgba(1, 227, 46, 0.879);
 }
 
 #email,

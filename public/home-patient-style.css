@@ -8,43 +8,43 @@ main {
 }
 
 .sort-container {
+  width: 100%;
   display: flex;
   justify-content: end;
 }
 
 .table-container {
   width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .name-container {
   margin-top: 20px;
   width: 100%;
-  display: flex;
-  align-items: center;
+  /* display: flex; */
 }
+
 .table {
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   flex-direction: column;
 }
 
 .name {
+  margin-left: 195px;
   /* margin-left: 400px; */
   font-weight: bold;
   font-size: 35px;
   font-family: sans-serif;
 }
 
-.name-table {
-  /* margin-left: 400px; */
-}
-
 .table-header {
   font-size: 20px;
-  padding: 20px 50px 20px 50px;
+  padding: 10px 50px 10px 50px;
   text-align: center;
-  background-color: rgba(255, 166, 0, 0.482);
+  background-color: rgb(252, 206, 157);
 }
 
 .table-content {
@@ -65,7 +65,11 @@ tr:nth-child(even) {
 #sort,
 #filter-month,
 #filter-hospital {
-  background-color: rgb(255, 246, 234);
+  background-color: rgb(255, 236, 217);
   font-family: sans-serif;
   font-weight: bold;
+}
+
+#filter-hospital {
+  margin-right: 194px;
 }

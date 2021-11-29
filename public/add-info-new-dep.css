@@ -8,6 +8,7 @@ html {
 }
 
 .main {
+  height: 100vh;
   margin-top: 40px;
   margin-left: 5rem;
   display: flex;
@@ -56,15 +57,32 @@ html {
   width: 350px;
   height: auto;
   margin: 30px;
-  padding: 40px;
+  padding: 45px 100px 60px 100px;
   background-color: rgb(255, 243, 228);
   color: #333;
   border: 2px solid rgb(255, 223, 181);
   border-radius: 40px 0 40px 0;
+  margin-bottom: 120px;
 }
 
 .new-details {
   width: 100%;
   display: flex;
   justify-content: center;
+}
+
+.header {
+  font-size: 25px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.sub-header {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.content {
+  font-size: 18px;
+  /* font-weight: 700; */
 }

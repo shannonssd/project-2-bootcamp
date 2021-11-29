@@ -8,6 +8,7 @@ html {
 }
 
 .main {
+  height: 100vh;
   margin-left: 5rem;
   display: flex;
   justify-content: center;
@@ -15,14 +16,15 @@ html {
 }
 
 #form {
-  width: 350px;
+  width: 30%;
   height: auto;
   margin: 30px;
-  padding: 40px;
+  padding: 45px 60px 60px 60px;
   background-color: rgb(255, 243, 228);
   color: #333;
   border: 2px solid rgb(255, 223, 181);
   border-radius: 40px 0 40px 0;
+  margin-bottom: 120px;
 }
 
 label {
@@ -46,7 +48,7 @@ label {
 .buttons {
   display: flex;
   justify-content: center;
-  padding-bottom: 25px;
+  padding-bottom: 55px;
 }
 
 .details {
@@ -58,4 +60,31 @@ label {
   display: flex;
   justify-content: center;
   flex-direction: column;
+}
+
+.add-patient {
+  margin: 0px 3px 0px 3px;
+  padding: 0px 9px 0px 9px;
+  background-color: rgb(249, 179, 88);
+  font-size: 15px;
+}
+
+.add-hospital {
+  margin: 0px 3px 0px 3px;
+  background-color: rgb(252, 218, 175);
+  font-size: 15px;
+}
+
+.add-department {
+  margin: 0px 3px 0px 3px;
+  background-color: rgb(252, 218, 175);
+  font-size: 15px;
+}
+
+.font-size {
+  font-size: 24px;
+}
+
+.font-size-input {
+  font-size: 18px;
 }

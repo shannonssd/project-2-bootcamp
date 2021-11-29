@@ -1,38 +1,40 @@
-
-    <%- include('nav', { link: "edit-style.css" }); %>
+    <%- include('nav', { link: "edit-style.css", title: "Edit Appointment" }); %>
 
   <body>
     <div class="main">
 
-    
-    <form action="/edit-appt?_method=PUT" method="POST">
-      Patient Name: <%= editFormInput.name %>
-      <br /><br />
-      Hospital: <%= editFormInput.hospital %>
-      <br /><br />
-      Date:
-      <label for="date" name="dateForm"></label>
-      <input
-        type="date"
-        id="date"
-        name="date"
-        value="<%= editFormInput.date %>"
-      />
-      <br /><br />
-      Department: <%= editFormInput.department %>
-      <br /><br />
-      Time:
-      <label for="time"></label>
-      <input
-        type="time"
-        id="time"
-        name="time"
-        value="<%= editFormInput.time %>"
-      />
-      <br /><br />
+      <div id="first"> 
+        <form action="/edit-appt?_method=PUT" method="POST">
+        <strong class="titles">  Patient Name:</strong> <br> <span class="content">  <%= editFormInput.name %></span>
+          <br /><br />
+          <strong class="titles"> Hospital:</strong> <br> <span class="content"> <%= editFormInput.hospital %></span>
+          <br /><br />
+          <strong class="titles"> Department: </strong><br> <span class="content"> <%= editFormInput.department %></span>
+          <br /><br />
+          <strong class="titles"> Date:</strong> <br>
+          <label for="date" name="dateForm"></label>
+          <input
+            type="date"
+            id="date"
+            name="date"
+            class="content"
+            value="<%= editFormInput.date %>"
+          />
+          <br /><br />
+          <strong class="titles"> Time: </strong> <br>
+          <label for="time"></label>
+          <input
+            type="time"
+            id="time"
+            name="time"
+            class="content"
+            value="<%= editFormInput.time %>"
+          />
+          <br /><br />
 
-      <input type="submit" value="Submit" />
-    </form>
+          <input type="submit" id="submit" value="Submit" />
+        </form>
+      </div>
     </div>
   </body>
 </html>

@@ -519,7 +519,7 @@ export const deleteAppt = (req, res) => {
   } else {
     const apptID = Object.keys(req.query)[0];
     pool.query('DELETE FROM appointments WHERE id = $1', [apptID]).then((deleteResult) => {
-      res.redirect('/');
+      res.redirect('/patient');
     });
   }
 };

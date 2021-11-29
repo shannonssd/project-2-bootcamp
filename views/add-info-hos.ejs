@@ -1,24 +1,25 @@
-  <%- include('nav', { link: "/add-info-hos-style.css" }); %>
+  <%- include('nav', { link: "/add-info-hos-style.css", title: "Add Hospital" }); %>
 
   <body>
     <div class="main">
       <br /><br />
       <div id="form">
         <div class="buttons">
-          <button class="sign-up-link" onclick="window.location.href='/add-info'"> New Patient</button>
-          <button class="sign-up-link" onclick="window.location.href='/add-info/hospital'"> New Hospital</button>
-          <button class="sign-up-link" onclick="window.location.href='/add-info/department'"> New Department</button>
+          <button class="add-patient" onclick="window.location.href='/add-info'"> New Patient</button>
+          <button class="add-hospital" onclick="window.location.href='/add-info/hospital'"> New Hospital</button>
+          <button class="add-department" onclick="window.location.href='/add-info/department'"> New Department</button>
         </div>
 
         <div class="details">
         <form action="/add-info/hospital" class="form-details" method="POST">
           
-          <label for="new-hospital">New Hospital:</label><br />
+          <label for="new-hospital" class="font-size">New Hospital:</label><br />
           <input
             type="text"
             id="new-hospital"
             name="new-hospital"
             placeholder="New Hospital"
+            class="font-size-input"
             required
           /><br /><br />
           

@@ -8,18 +8,21 @@ main {
 }
 
 .sort-container {
+  width: 100%;
   display: flex;
   justify-content: end;
 }
 
 .table-container {
   width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .table {
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   flex-direction: column;
 }
 
@@ -35,6 +38,9 @@ main {
 .october,
 .november,
 .december {
+  display: flex;
+  align-items: center;
+  margin-left: 195px;
   /* margin-left: 400px; */
   font-weight: bold;
   font-size: 35px;
@@ -44,30 +50,16 @@ main {
 .month-container {
   margin-top: 20px;
   width: 100%;
-  display: flex;
+  /* display: flex;
   align-items: center;
-}
-
-.january-table,
-.february-table,
-.march-table,
-.april-table,
-.may-table,
-.june-table,
-.july-table,
-.august-table,
-.september-table,
-.october-table,
-.november-table,
-.december-table {
-  /* margin-left: 400px; */
+} */
 }
 
 .table-header {
   font-size: 20px;
-  padding: 20px 50px 20px 50px;
+  padding: 10px 50px 10px 50px;
   text-align: center;
-  background-color: rgba(255, 166, 0, 0.482);
+  background-color: rgb(252, 206, 157);
 }
 
 .table-content {
@@ -98,7 +90,7 @@ tr:nth-child(even) {
   border-bottom: 15px solid #2f2f2f;
   font-size: 0;
   line-height: 0;
-  margin-left: 16px;
+  /* margin-left: 350px; */
 }
 
 #submit {
@@ -110,7 +102,11 @@ tr:nth-child(even) {
 #sort,
 #filter-patient,
 #filter-hospital {
-  background-color: rgb(255, 246, 234);
+  background-color: rgb(255, 236, 217);
   font-family: sans-serif;
   font-weight: bold;
+}
+
+#filter-hospital {
+  margin-right: 194px;
 }

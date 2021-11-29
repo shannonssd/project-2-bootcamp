@@ -1,14 +1,14 @@
-  <%- include('nav', { link: "/add-info-new-dep.css" }); %>
+  <%- include('nav', { link: "/add-info-new-dep.css", title: "New Department" }); %>
   <body>
     <div class="main">
         <div id="results">
           <div class="new-details">
-        <div>New Details</div>
+        <div class="header">New Department Details</div>
         </div>
         <br>
-        <% newInfoArrayDep.forEach((element) => { %>        
+        <% newInfoArrayDep.forEach((element) => { %>
         <div>
-            <%= Object.keys(element)[0] %>: <br><%= Object.values(element)[0] %>
+            <span class="sub-header"><%= Object.keys(element)[0] %>: </span>  <br> <span class="content"><%= Object.values(element)[0] %> </span> 
           <br><br>
         </div>
         <% }); %>

@@ -1,26 +1,24 @@
-
-    <%- include('nav', { link: "add-appt-style.css" }); %>
-
+  <%- include('nav', { link: "add-appt-style.css", title: 'Add Appointment' }); %>
   <body>
     <div class="main">
 
       <div id="form">
         <form action="/add-appt"  method="POST">
-          Patient Name:
+          <span class="titles">  Patient Name:</span> 
           <select name="patient-name" id="patient-name">
             <% formData[0].forEach((element) => { %>
-            <option value="<%= element.name %>"><%= element.name %></option>
+            <option value="<%= element.name %>" ><%= element.name %></option>
             <%})%>
           </select>
           <br /><br />
-          Hospital:
+          <span class="titles"> Hospital:</span> 
           <select name="hospital" id="hospital">
             <% formData[1].forEach((element) => { %>
             <option value="<%= element.name %>"><%= element.name %></option>
             <%})%>
           </select>
           <br /><br />
-          Date:
+          <span class="titles"> Date:</span> 
           <label for="date" name="dateForm"></label>
           <input type="date" id="date" name="date" />
           <br /><br />
@@ -30,8 +28,8 @@
 
             
               <tr class="depart-time">
-                <th>Department:</th>
-                <th>Time:</th>
+                <th class="titles"> Department: </th>
+                <th class="time-title titles">Time: </th>
               </tr>
             <% formData[2].forEach((element) => { %>
             <tr class="depart-time">

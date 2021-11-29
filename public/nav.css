@@ -77,7 +77,7 @@ main {
   display: none;
   margin-left: 1rem;
   /* background: -webkit-linear-gradient(yellow, rgb(240, 78, 78)); */
-  background: -webkit-linear-gradient(yellow, rgb(240, 78, 78));
+  background: rgb(255, 77, 0);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -89,11 +89,11 @@ main {
 }
 
 .fa-primary {
-  color: orange;
+  color: rgb(255, 60, 0);
 }
 
 .fa-secondary {
-  color: rgb(255, 121, 5);
+  color: rgb(255, 77, 0);
 }
 
 .fa-primary,
@@ -123,10 +123,11 @@ main {
   position: absolute;
   left: -999px;
   transition: var(--transition-speed);
-  background: -webkit-linear-gradient(yellow, red);
+  background: rgb(255, 60, 0);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  padding-left: 10px;
 }
 
 .navbar:hover .logo svg {
