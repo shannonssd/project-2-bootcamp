@@ -435,7 +435,7 @@ export const addAppt = (req, res) => {
               const appointmentData = [visitID, departmentID, latestTimeArray[0], patientID];
 
               pool.query('INSERT INTO appointments (visit_id, department_id, time, patient_id) VALUES ($1, $2, $3, $4)', appointmentData).then((apptResults) => {
-                res.redirect('/');
+                res.redirect('/patient');
               });
             });
           }
@@ -478,7 +478,7 @@ export const editAppt = (req, res) => {
       oldDate = oldDateResult.rows[0].date;
       if (oldDate === newDate) {
         pool.query('UPDATE appointments SET time = $1 WHERE id = $2', [newTime, appointmentID]);
-        res.redirect('/');
+        res.redirect('/patient');
       } else {
       // 2. Check if hosp visit exists: date + hosp id check for hosp_visit id
       // Retrive hospital id;
@@ -494,7 +494,7 @@ export const editAppt = (req, res) => {
                 pool.query('INSERT INTO hospital_visits (date, hospital_id) VALUES ($1, $2) RETURNING *', [newDate, hosID]).then((newResult) => {
                   const hosVisitID = newResult.rows[0].id;
                   pool.query('INSERT INTO appointments (visit_id, department_id, time, patient_id) VALUES ($1, $2, $3, $4)', [hosVisitID, departID, newTime, patID]).then((results) => {
-                    res.redirect('/');
+                    res.redirect('/patient');
                   });
                 });
               }
@@ -502,7 +502,7 @@ export const editAppt = (req, res) => {
               if (latestResult.rows.length !== 0) {
                 const visitExistsID = latestResult.rows[0].id;
                 pool.query('INSERT INTO appointments (visit_id, department_id, time, patient_id) VALUES ($1, $2, $3, $4)', [visitExistsID, departID, newTime, patID]).then((lastResult) => {
-                  res.redirect('/');
+                  res.redirect('/patient');
                 });
               }
             });
