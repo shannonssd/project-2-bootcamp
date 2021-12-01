@@ -1,0 +1,22 @@
+Code Review Notes from Michelle and Mike
+
+Good points 
+- good separation between express app in index.js, (account) route callbacks, and hashing.
+- even CSS files are oranized and separate. 👌🏼
+- code inside index.js, though very long, is well organized and easy to navigate.
+- it is a complicated project with many tables and many relationships. Good job on getting all things working together.
+
+Points to improve
+- Add more comments, especially in very long functions.
+  - above the function declaration, giving an overview of what the function is for.
+  - between main sections of the function to explain the smaller steps.
+- include planning docs (ERD, user flow, wireframes) in a /planning_docs folder in the repo.
+- very long if (month===...) section can be shortened in multiple ways
+  - put it in a function
+  - use an array const monthNames = ['Jan','Feb'...]
+  - use sortMonthArray[index] and monthNames[index]
+- sorting functions could be refactored into helper functions, and then reused.
+- addApptForm() has nested queries that are unrelated to each other. They could be better handled using Promises.all().
+- pool and pgConnectionConfigs is defined in more than 1 file: route-callbacks and account-route-callbacks. 
+   - It would be better to refactor configs into a separate file, and import pool and config from that. (similar to how hashing is separated).
+
