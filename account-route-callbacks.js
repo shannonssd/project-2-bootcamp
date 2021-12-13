@@ -16,7 +16,7 @@ if (process.env.DATABASE_URL) {
   pgConnectionConfigs = {
     user: 'shannon',
     host: 'localhost',
-    database: 'appointment_app_test',
+    database: 'appointment_app',
     port: 5432,
   };
 }
